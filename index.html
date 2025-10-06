@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sahil Jasani — Automation & Control Engineer</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+
+    <!-- Three.js for 3D animation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <style>
+        :root {
+            --accent-color: #0091dc; /* Festo-inspired Blue */
+            --accent-glow: rgba(0, 145, 220, 0.5);
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0A0A10; /* Near-black */
+            color: #E0E0E0;
+            overflow-x: hidden;
+        }
+        .themed-gradient-bg {
+            background-color: #0A0A10;
+            background-image: 
+                radial-gradient(at 15% 15%, hsla(205, 100%, 43%, 0.2) 0px, transparent 50%),
+                radial-gradient(at 85% 85%, hsla(220, 70%, 25%, 0.15) 0px, transparent 50%);
+        }
+        .glass-effect {
+            background: rgba(16, 16, 32, 0.5);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 145, 220, 0.1);
+            transition: border-color 0.3s ease;
+        }
+        .nav-link.active {
+            color: #fff;
+            background-color: var(--accent-color);
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+        .section-min-height { min-height: 100vh; }
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0A0A10; }
+        ::-webkit-scrollbar-thumb { background: #007ab5; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent-color); }
+        .project-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0, 145, 220, 0.4);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        #hero-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .section-heading {
+            position: relative;
+            display: inline-block;
+            padding-bottom: 0.5rem;
+        }
+        .section-heading::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, #007ab5, var(--accent-color));
+            border-radius: 2px;
+        }
+        .exp-tab {
+            cursor: pointer;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+        .exp-tab:hover {
+            background-color: rgba(0, 145, 220, 0.1);
+        }
+        .exp-tab.active {
+            background-color: rgba(0, 145, 220, 0.15);
+            border-color: rgba(0, 145, 220, 0.3);
+            color: var(--accent-color);
+        }
+        .exp-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        .exp-content.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animated-grid-bg {
+            position: relative;
+            overflow: hidden;
+        }
+        .animated-grid-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 200%;
+            height: 200%;
+            background-image: 
+                linear-gradient(to right, rgba(0, 145, 220, 0.1) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0, 145, 220, 0.1) 1px, transparent 1px);
+            background-size: 40px 40px;
+            animation: moveGrid 20s linear infinite;
+            z-index: 0;
+        }
+        @keyframes moveGrid {
+            from { transform: translate(0, 0); }
+            to { transform: translate(-50%, -50%); }
+        }
+        #skills-canvas-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.3;
+        }
+    </style>
+</head>
+
+<body class="themed-gradient-bg">
+
+    <div id="hero-canvas"></div>
+
+    <!-- Header & Navigation -->
+    <header id="main-header" class="glass-effect fixed top-4 left-1/2 -translate-x-1/2 w-[95%] max-w-4xl z-50 rounded-full transition-all duration-300">
+        <nav class="flex items-center justify-between p-2">
+            <a href="#introduction" class="text-xl font-bold text-white pl-4 hover:text-cyan-300 transition">SJ</a>
+            <div class="hidden md:flex items-center space-x-2">
+                <a href="#summary" class="nav-link px-4 py-2 rounded-full text-sm font-medium text-gray-300 hover:bg-gray-800 transition">About</a>
+                <a href="#experience" class="nav-link px-4 py-2 rounded-full text-sm font-medium text-gray-300 hover:bg-gray-800 transition">Experience</a>
+                <a href="#projects" class="nav-link px-4 py-2 rounded-full text-sm font-medium text-gray-300 hover:bg-gray-800 transition">Projects</a>
+                <a href="#skills" class="nav-link px-4 py-2 rounded-full text-sm font-medium text-gray-300 hover:bg-gray-800 transition">Skills</a>
+                <a href="#contact" class="nav-link px-4 py-2 rounded-full text-sm font-medium text-gray-300 hover:bg-gray-800 transition">Contact</a>
+            </div>
+            <a href="#contact" class="text-white text-sm font-medium px-5 py-2.5 rounded-full transition mr-1 shadow-lg" style="background-color: var(--accent-color); box-shadow: 0 0 20px var(--accent-glow);">
+                Get in Touch
+            </a>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Section 1: Introduction -->
+        <section id="introduction" class="section-min-height relative flex items-center justify-center p-4 overflow-hidden">
+            <div class="text-center relative z-10 reveal">
+                <img src="images/profile_picture.png" alt="Sahil Jasani" class="w-40 h-40 rounded-full mx-auto mb-6 border-4 shadow-2xl object-cover" style="border-color: rgba(0, 145, 220, 0.5);">
+                <h1 class="text-5xl md:text-7xl font-black text-white leading-tight">
+                    Sahil Jasani
+                </h1>
+                <p class="text-xl md:text-2xl font-medium mt-4" style="color: var(--accent-color);">
+                    Advanced Control & Robotics Engineer
+                </p>
+                <p class="max-w-2xl mx-auto text-lg text-gray-400 mt-6">
+                    A Mechatronics M.Sc. student crafting intelligent, data-driven systems to solve complex, real-world problems in automation.
+                </p>
+            </div>
+        </section>
+
+        <!-- Section 2: Summary -->
+        <section id="summary" class="section-min-height relative flex items-center justify-center p-8">
+            <div class="max-w-4xl mx-auto reveal z-10">
+                <h2 class="text-4xl font-bold text-center text-white mb-12 section-heading">About Me</h2>
+                <div class="glass-effect rounded-2xl p-8 md:p-12 space-y-6 text-lg text-gray-300 leading-relaxed">
+                    <p>
+                        As a Mechatronics Engineer, I specialize in architecting intelligent control systems that bridge the gap between complex hardware and high-level software. My current Master's thesis at Festo SE & Co. KG focuses on a hybrid Model Predictive Control (MPC) system, where I'm integrating machine learning to push the boundaries of real-time process optimization.
+                    </p>
+                    <p>
+                        My expertise lies in advanced control theory, state estimation (EKF, UKF), and system identification, complemented by hands-on experience with industrial hardware like PLCs and real-time systems. I am passionate about creating robust, efficient, and autonomous systems that solve tangible industrial challenges. I am fluent in English, actively improving my German (B1), and eager to contribute my skills to a forward-thinking team anywhere in Germany.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Experience -->
+        <section id="experience" class="section-min-height relative flex items-center justify-center p-8">
+            <div class="max-w-4xl mx-auto reveal w-full z-10">
+                <h2 class="text-4xl font-bold text-center text-white mb-16 section-heading">My Journey</h2>
+                <div class="md:flex gap-8">
+                    <!-- Left: Tabs -->
+                    <div id="exp-tabs" class="md:w-1/3 flex md:flex-col gap-2 mb-8 md:mb-0">
+                        <div class="exp-tab active" onclick="switchExpTab(this, 'exp-festo')">
+                            <h3 class="font-bold">Festo SE & Co. KG</h3>
+                            <p class="text-sm text-gray-400">Thesis Student</p>
+                        </div>
+                         <div class="exp-tab" onclick="switchExpTab(this, 'exp-asahi')">
+                            <h3 class="font-bold">Asahi India Glass</h3>
+                            <p class="text-sm text-gray-400">Process & Systems Engineer</p>
+                        </div>
+                    </div>
+                    <!-- Right: Content -->
+                    <div class="md:w-2/3">
+                        <div id="exp-festo" class="exp-content active glass-effect animated-grid-bg rounded-xl p-8">
+                           <div class="relative z-10">
+                                <p class="font-semibold text-sm mb-1" style="color: var(--accent-color);">05/2025 - Present</p>
+                                <h3 class="text-2xl font-bold text-white mb-2">Hybrid Model Predictive Control & AI</h3>
+                                <p class="font-semibold text-gray-300 mb-4">Esslingen, Germany (HQ)</p>
+                                <ul class="list-disc list-inside text-gray-300 space-y-3">
+                                    <li>Designed a hybrid MPC system to enhance the efficiency and autonomy of an industrial bioreactor process.</li>
+                                    <li>Integrated neural networks for system identification and reinforcement learning for controller auto-tuning.</li>
+                                    <li>Implemented advanced state estimation algorithms (EKF, UKF, MHE) for robust performance.</li>
+                                    <li>Engineered the system for real-time deployment, culminating in Hardware-in-the-Loop (HiL) validation.</li>
+                                </ul>
+                           </div>
+                        </div>
+                        <div id="exp-asahi" class="exp-content glass-effect animated-grid-bg rounded-xl p-8">
+                           <div class="relative z-10">
+                                <p class="font-semibold text-sm mb-1" style="color: var(--accent-color);">10/2020 - 05/2022</p>
+                                <h3 class="text-2xl font-bold text-white mb-2">Process & Systems Engineer</h3>
+                                 <p class="font-semibold text-gray-300 mb-4">Gujarat, India</p>
+                                <ul class="list-disc list-inside text-gray-300 space-y-3">
+                                    <li>Conducted root cause analysis for production processes for automotive clients like VW, Suzuki, and TATA.</li>
+                                    <li>Developed technical specifications for new laboratory equipment and oversaw its procurement and validation.</li>
+                                    <li>Designed the layout and operational workflows for a new calibration lab to meet NABL/ISO-17025 standards.</li>
+                                </ul>
+                           </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Section 4: Projects -->
+        <section id="projects" class="py-24 p-8 relative">
+            <div class="max-w-6xl mx-auto reveal z-10">
+                <h2 class="text-4xl font-bold text-center text-white mb-16 section-heading">Projects</h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="glass-effect rounded-xl p-6 project-card">
+                        <h3 class="text-xl font-bold text-white">AI-Supervised IIoT Control System</h3>
+                        <p class="text-gray-400 mt-2 text-sm">A containerized IIoT pipeline for real-time motor monitoring, anomaly detection, and AI-supervised control.</p>
+                    </div>
+                    <div class="glass-effect rounded-xl p-6 project-card">
+                        <h3 class="text-xl font-bold text-white">Advanced LiDAR Simulation</h3>
+                        <p class="text-gray-400 mt-2 text-sm">Monte Carlo photon transport model to study LiDAR performance in harsh industrial environments.</p>
+                    </div>
+                    <div class="glass-effect rounded-xl p-6 project-card">
+                        <h3 class="text-xl font-bold text-white">Manipulator Robot Automation</h3>
+                        <p class="text-gray-400 mt-2 text-sm">Programmed a 3-DOF robotic arm using MATLAB & Simulink with inverse kinematics and PID control.</p>
+                    </div>
+                    <div class="glass-effect rounded-xl p-6 project-card">
+                        <h3 class="text-xl font-bold text-white">Autonomous Robot Simulation</h3>
+                        <p class="text-gray-400 mt-2 text-sm">ROS 2 and Gazebo simulation for a warehouse robot with SLAM, path planning, and obstacle avoidance.</p>
+                    </div>
+                    <div class="glass-effect rounded-xl p-6 project-card">
+                        <h3 class="text-xl font-bold text-white">CNN-Based Crop Disease Detection</h3>
+                        <p class="text-gray-400 mt-2 text-sm">Developed a CNN model and mobile app to classify plant diseases, optimized with TensorFlow Lite.</p>
+                    </div>
+                    <div class="glass-effect rounded-xl p-6 project-card">
+                        <h3 class="text-xl font-bold text-white">AI-Powered Study Chatbot</h3>
+                        <p class="text-gray-400 mt-2 text-sm">Built a chatbot using semantic search (FAISS) and text simplification (BART) to assist with PDF navigation.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Skills -->
+        <section id="skills" class="section-min-height relative flex items-center justify-center p-8 overflow-hidden">
+            <div id="skills-canvas-container"></div>
+            <div class="max-w-4xl mx-auto reveal w-full z-10">
+                <h2 class="text-4xl font-bold text-center text-white mb-16 section-heading">Core Competencies</h2>
+                <div class="space-y-10">
+                    <div>
+                        <h3 class="text-xl font-semibold text-cyan-300 mb-4">Industrial AI & Advanced Control</h3>
+                        <div class="flex flex-wrap gap-3"><span class="glass-effect text-sm px-4 py-2 rounded-lg">Model Predictive Control (MPC)</span><span class="glass-effect text-sm px-4 py-2 rounded-lg">Reinforcement Learning</span><span class="glass-effect text-sm px-4 py-2 rounded-lg">State Estimation (EKF, UKF, MHE)</span><span class="glass-effect text-sm px-4 py-2 rounded-lg">System Identification</span></div>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold text-cyan-300 mb-4">Software & Deployment</h3>
+                        <div class="flex flex-wrap gap-3"><span class="glass-effect text-sm px-4 py-2 rounded-lg">C++ (Embedded)</span><span class="glass-effect text-sm px-4 py-2 rounded-lg">Python (PyTorch, Flask)</span><span class="glass-effect text-sm px-4 py-2 rounded-lg">Docker</span><span class="glass-effect text-sm px-4 py-2 rounded-lg">Git/GitHub</span><span class="glass-effect text-sm px-4 py-2 rounded-lg">CI/CD Pipelines</span><span class="glass-effect text-sm px-4 py-2 rounded-lg">TDD</span></div>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold text-cyan-300 mb-4">Industrial Automation & Simulation</h3>
+                        <div class="flex flex-wrap gap-3"><span class="glass-effect text-sm px-4 py-2 rounded-lg">PLC Programming (Siemens S7)</span><span class="glass-effect text-sm px-4 py-2 rounded-lg">OPC UA</span><span class="glass-effect text-sm px-4 py-2 rounded-lg">Hardware-in-the-Loop (HiL)</span><span class="glass-effect text-sm px-4 py-2 rounded-lg">MATLAB/Simulink</span><span class="glass-effect text-sm px-4 py-2 rounded-lg">CasADi</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 6: Contact -->
+        <section id="contact" class="section-min-height relative flex flex-col items-center justify-center p-8 text-center">
+            <div class="max-w-2xl mx-auto reveal z-10">
+                <h2 class="text-4xl font-bold text-center text-white mb-4 section-heading">Get In Touch</h2>
+                <p class="text-lg text-gray-400 mb-8">
+                    I'm currently seeking new opportunities and am open to collaboration. Whether you have a question or just want to connect, my inbox is always open.
+                </p>
+                <a href="mailto:sahil.jasani@student.uni-siegen.de" class="inline-block bg-cyan-600 hover:bg-cyan-500 text-white font-semibold text-lg px-8 py-4 rounded-lg transition duration-300 transform hover:scale-105 shadow-lg shadow-cyan-600/20">
+                    Say Hello
+                </a>
+            </div>
+            
+            <footer class="mt-24 text-center text-gray-500 relative z-10">
+                <div class="flex justify-center space-x-6 mb-4">
+                    <a href="https://github.com/SahilJasani2" target="_blank" class="hover:text-cyan-400 transition"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.108-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.91 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path></svg></a>
+                    <a href="https://linkedin.com/in/sahiljasani/" target="_blank" class="hover:text-cyan-400 transition"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path></svg></a>
+                </div>
+                <p>Designed & Built by Sahil Jasani</p>
+            </footer>
+        </section>
+    </main>
+    
+    <script>
+        // --- Scroll Animations ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // --- Active Nav Link on Scroll ---
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const navObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    navLinks.forEach(link => {
+                        link.classList.toggle('active', link.getAttribute('href').substring(1) === entry.target.id);
+                    });
+                }
+            });
+        }, { rootMargin: "-50% 0px -50% 0px" });
+        sections.forEach(section => navObserver.observe(section));
+        
+        // --- Experience Tab Switching ---
+        function switchExpTab(tabElement, contentId) {
+            document.querySelectorAll('.exp-tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.exp-content').forEach(content => content.classList.remove('active'));
+            tabElement.classList.add('active');
+            document.getElementById(contentId).classList.add('active');
+        }
+
+        // --- Three.js Waveform Animation ---
+        let scene, camera, renderer, particles;
+        let mouseX = 0, mouseY = 0;
+        const PARTICLE_COUNT = 5000;
+
+        function init3D() {
+            const container = document.getElementById('hero-canvas');
+            if (!container) return;
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 300;
+
+            renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            container.appendChild(renderer.domElement);
+
+            const positions = new Float32Array(PARTICLE_COUNT * 3);
+            for (let i = 0; i < PARTICLE_COUNT; i++) {
+                let i3 = i * 3;
+                positions[i3] = (Math.random() - 0.5) * 800; // x
+                positions[i3 + 1] = (Math.random() - 0.5) * 400; // y
+                positions[i3 + 2] = (Math.random() - 0.5) * 400; // z
+            }
+            
+            const particlesGeometry = new THREE.BufferGeometry();
+            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            
+            const particlesMaterial = new THREE.PointsMaterial({
+                color: '#0891b2',
+                size: 0.8,
+                blending: THREE.AdditiveBlending,
+                transparent: true,
+                sizeAttenuation: true,
+            });
+            
+            particles = new THREE.Points(particlesGeometry, particlesMaterial);
+            scene.add(particles);
+
+            window.addEventListener('resize', onWindowResize, false);
+            document.addEventListener('mousemove', onMouseMove, false);
+            animate();
+        }
+
+        const clock = new THREE.Clock();
+        function animate() {
+            if (!renderer) return;
+            const elapsedTime = clock.getElapsedTime();
+            
+            const positions = particles.geometry.attributes.position.array;
+            for (let i = 0; i < PARTICLE_COUNT; i++) {
+                let i3 = i * 3;
+                const x = particles.geometry.attributes.position.getX(i);
+                positions[i3 + 1] = Math.sin(x * 0.01 + elapsedTime) * 20;
+            }
+            particles.geometry.attributes.position.needsUpdate = true;
+
+            camera.position.x += (mouseX * 200 - camera.position.x) * 0.05;
+            camera.position.y += (-mouseY * 200 - camera.position.y) * 0.05;
+            camera.lookAt(scene.position);
+
+            renderer.render(scene, camera);
+            requestAnimationFrame(animate);
+        }
+
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+        
+        function onMouseMove(event) {
+            mouseX = (event.clientX - window.innerWidth / 2) / (window.innerWidth / 2);
+            mouseY = (event.clientY - window.innerHeight / 2) / (window.innerHeight / 2);
+        }
+
+        // --- Skills Animation (Neural Network) ---
+        let skillsScene, skillsCamera, skillsRenderer, skillsPoints, skillsLines;
+        const skillsMouse = new THREE.Vector2();
+
+        function initSkillsAnimation() {
+            const container = document.getElementById('skills-canvas-container');
+            if (!container) return;
+
+            skillsScene = new THREE.Scene();
+            skillsCamera = new THREE.PerspectiveCamera(75, container.offsetWidth / container.offsetHeight, 1, 1000);
+            skillsCamera.position.z = 50;
+
+            skillsRenderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            skillsRenderer.setSize(container.offsetWidth, container.offsetHeight);
+            skillsRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            container.appendChild(skillsRenderer.domElement);
+            
+            const NUM_POINTS = 100;
+            const positions = [];
+            const particlesData = [];
+
+            for (let i = 0; i < NUM_POINTS; i++) {
+                const x = Math.random() * 200 - 100;
+                const y = Math.random() * 200 - 100;
+                const z = Math.random() * 200 - 100;
+                positions.push(x, y, z);
+                particlesData.push({
+                    velocity: new THREE.Vector3(-1 + Math.random() * 2, -1 + Math.random() * 2, -1 + Math.random() * 2).multiplyScalar(0.1),
+                    numConnections: 0
+                });
+            }
+            
+            const pGeom = new THREE.BufferGeometry();
+            pGeom.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3).setUsage(THREE.DynamicDrawUsage));
+            pGeom.userData.particlesData = particlesData; 
+
+            const pMat = new THREE.PointsMaterial({ color: '#22d3ee', size: 1.5, blending: THREE.AdditiveBlending, transparent: true });
+            skillsPoints = new THREE.Points(pGeom, pMat);
+            skillsScene.add(skillsPoints);
+
+            const lineGeom = new THREE.BufferGeometry();
+            const linePos = new Float32Array(NUM_POINTS * NUM_POINTS * 3);
+            lineGeom.setAttribute('position', new THREE.BufferAttribute(linePos, 3).setUsage(THREE.DynamicDrawUsage));
+            const lineMat = new THREE.LineBasicMaterial({ color: '#0e7490', transparent: true, opacity: 0.3, blending: THREE.AdditiveBlending });
+            skillsLines = new THREE.LineSegments(lineGeom, lineMat);
+            skillsScene.add(skillsLines);
+
+            container.addEventListener('mousemove', onSkillsMouseMove, false);
+            window.addEventListener('resize', onSkillsWindowResize, false);
+            animateSkills();
+        }
+        
+        function onSkillsWindowResize() {
+            const container = document.getElementById('skills-canvas-container');
+            if (!container) return;
+            skillsCamera.aspect = container.offsetWidth / container.offsetHeight;
+            skillsCamera.updateProjectionMatrix();
+            skillsRenderer.setSize(container.offsetWidth, container.offsetHeight);
+        }
+
+        function onSkillsMouseMove(event) {
+            const container = document.getElementById('skills-canvas-container');
+            if (!container) return;
+            const rect = container.getBoundingClientRect();
+            skillsMouse.x = ((event.clientX - rect.left) / container.offsetWidth) * 2 - 1;
+            skillsMouse.y = -((event.clientY - rect.top) / container.offsetHeight) * 2 + 1;
+        }
+
+        function animateSkills() {
+            if (!skillsRenderer) return;
+
+            const pGeom = skillsPoints.geometry;
+            const positions = pGeom.attributes.position;
+            const particlesData = pGeom.userData.particlesData;
+            
+            const mouseVector = new THREE.Vector3(skillsMouse.x, skillsMouse.y, 0.5);
+            mouseVector.unproject(skillsCamera);
+            const dir = mouseVector.sub(skillsCamera.position).normalize();
+            const distance = -skillsCamera.position.z / dir.z;
+            const pos = skillsCamera.position.clone().add(dir.multiplyScalar(distance));
+
+            let vertexpos = 0;
+            let numConnected = 0;
+
+            for (let i = 0; i < particlesData.length; i++) {
+                particlesData[i].numConnections = 0;
+                const p = new THREE.Vector3(positions.getX(i), positions.getY(i), positions.getZ(i));
+                p.add(particlesData[i].velocity);
+                
+                const distToMouse = p.distanceTo(pos);
+                if (distToMouse < 20) {
+                    const repel = new THREE.Vector3().subVectors(p, pos).normalize();
+                    p.add(repel.multiplyScalar(0.5));
+                }
+
+                if (p.x < -100 || p.x > 100) particlesData[i].velocity.x *= -1;
+                if (p.y < -100 || p.y > 100) particlesData[i].velocity.y *= -1;
+                if (p.z < -100 || p.z > 100) particlesData[i].velocity.z *= -1;
+                positions.setXYZ(i, p.x, p.y, p.z);
+            }
+
+            const linePositions = skillsLines.geometry.attributes.position;
+            for (let i = 0; i < particlesData.length; i++) {
+                for (let j = i + 1; j < particlesData.length; j++) {
+                    const p1 = new THREE.Vector3(positions.getX(i), positions.getY(i), positions.getZ(i));
+                    const p2 = new THREE.Vector3(positions.getX(j), positions.getY(j), positions.getZ(j));
+                    if (p1.distanceTo(p2) < 25 && numConnected < particlesData.length * 2) {
+                        linePositions.setXYZ(vertexpos++, p1.x, p1.y, p1.z);
+                        linePositions.setXYZ(vertexpos++, p2.x, p2.y, p2.z);
+                        numConnected++;
+                    }
+                }
+            }
+
+            positions.needsUpdate = true;
+            linePositions.needsUpdate = true;
+            skillsLines.geometry.setDrawRange(0, numConnected * 2);
+
+            skillsRenderer.render(skillsScene, skillsCamera);
+            requestAnimationFrame(animateSkills);
+        }
+
+        init3D();
+        initSkillsAnimation();
+    </script>
+</body>
+</html>
+
