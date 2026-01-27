@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sahil Jasani — Automation & Control Engineer</title>
+    <title>Sahil Jasani — Advanced Control & AI Engineer</title>
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -159,7 +159,7 @@
             <a href="#introduction" class="text-xl font-bold text-white pl-4 hover:text-cyan-300 transition">SJ</a>
             <div class="hidden md:flex items-center space-x-2">
                 <a href="#summary" class="nav-link px-4 py-2 rounded-full text-sm font-medium text-gray-300 hover:bg-gray-800 transition">About</a>
-                <a href="#experience" class="nav-link px-4 py-2 rounded-full text-sm font-medium text-gray-300 hover:bg-gray-800 transition">Experience</a>
+                <a href="#experience" class="nav-link px-4 py-2 rounded-full text-sm font-medium text-gray-300 hover:bg-gray-800 transition">Work Experience</a>
                 <a href="#projects" class="nav-link px-4 py-2 rounded-full text-sm font-medium text-gray-300 hover:bg-gray-800 transition">Projects</a>
                 <a href="#skills" class="nav-link px-4 py-2 rounded-full text-sm font-medium text-gray-300 hover:bg-gray-800 transition">Skills</a>
                 <a href="#contact" class="nav-link px-4 py-2 rounded-full text-sm font-medium text-gray-300 hover:bg-gray-800 transition">Contact</a>
@@ -174,15 +174,19 @@
         <!-- Section 1: Introduction -->
         <section id="introduction" class="section-min-height relative flex items-center justify-center p-4 overflow-hidden">
             <div class="text-center relative z-10 reveal">
-                <img src="images/profile_picture.png" alt="Sahil Jasani" class="w-40 h-40 rounded-full mx-auto mb-6 border-4 shadow-2xl object-cover" style="border-color: rgba(0, 145, 220, 0.5);">
+                <!-- Fallback/Placeholder Image Logic -->
+                <div class="w-40 h-40 rounded-full mx-auto mb-6 border-4 shadow-2xl overflow-hidden flex items-center justify-center bg-gray-800" style="border-color: rgba(0, 145, 220, 0.5);">
+                    <img src="images/profile_picture.png" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=Sahil+Jasani&background=0D8ABC&color=fff&size=256'" alt="Sahil Jasani" class="w-full h-full object-cover">
+                </div>
+                
                 <h1 class="text-5xl md:text-7xl font-black text-white leading-tight">
                     Sahil Jasani
                 </h1>
                 <p class="text-xl md:text-2xl font-medium mt-4" style="color: var(--accent-color);">
-                    Advanced Control & Robotics Engineer
+                    Advanced Control & AI Engineer
                 </p>
                 <p class="max-w-2xl mx-auto text-lg text-gray-400 mt-6">
-                    A Mechatronics M.Sc. student crafting intelligent, data-driven systems to solve complex, real-world problems in automation.
+                    Bridging the gap between Advanced Control Theory and Industrial AI to build intelligent, autonomous systems for the real world.
                 </p>
             </div>
         </section>
@@ -193,10 +197,10 @@
                 <h2 class="text-4xl font-bold text-center text-white mb-12 section-heading">About Me</h2>
                 <div class="glass-effect rounded-2xl p-8 md:p-12 space-y-6 text-lg text-gray-300 leading-relaxed">
                     <p>
-                        As a Mechatronics Engineer, I specialize in architecting intelligent control systems that bridge the gap between complex hardware and high-level software. My current Master's thesis at Festo SE & Co. KG focuses on a hybrid Model Predictive Control (MPC) system, where I'm integrating machine learning to push the boundaries of real-time process optimization.
+                        I am an <strong>Advanced Control & AI Engineer</strong> specializing in the intersection of Control Theory, Machine Learning, and Industrial Automation. I have a proven track record in architecting Digital Twins, Adaptive MPC, and State & Parameter Estimation frameworks for complex nonlinear systems.
                     </p>
                     <p>
-                        My expertise lies in advanced control theory, state estimation (EKF, UKF), and system identification, complemented by hands-on experience with industrial hardware like PLCs and real-time systems. I am passionate about creating robust, efficient, and autonomous systems that solve tangible industrial challenges. I am fluent in English, actively improving my German (B1), and eager to contribute my skills to a forward-thinking team anywhere in Germany.
+                        My expertise lies in deploying <strong>hybrid control architectures</strong> that integrate <strong>Deep Learning</strong> models with real-time PLC environments using Docker and Industrial IoT protocols. I am passionate about bridging the gap between advanced mathematical modeling and scalable software deployment to drive process efficiency and autonomy. Additionally, I am fluent in English and actively improving my German (B1).
                     </p>
                 </div>
             </div>
@@ -205,7 +209,7 @@
         <!-- Section 3: Experience -->
         <section id="experience" class="section-min-height relative flex items-center justify-center p-8">
             <div class="max-w-4xl mx-auto reveal w-full z-10">
-                <h2 class="text-4xl font-bold text-center text-white mb-16 section-heading">My Journey</h2>
+                <h2 class="text-4xl font-bold text-center text-white mb-16 section-heading">Work Experience</h2>
                 <div class="md:flex gap-8">
                     <!-- Left: Tabs -->
                     <div id="exp-tabs" class="md:w-1/3 flex md:flex-col gap-2 mb-8 md:mb-0">
@@ -223,13 +227,12 @@
                         <div id="exp-festo" class="exp-content active glass-effect animated-grid-bg rounded-xl p-8">
                            <div class="relative z-10">
                                 <p class="font-semibold text-sm mb-1" style="color: var(--accent-color);">05/2025 - Present</p>
-                                <h3 class="text-2xl font-bold text-white mb-2">Hybrid Model Predictive Control & AI</h3>
+                                <h3 class="text-2xl font-bold text-white mb-2">Model Predictive Control for Industrial Systems</h3>
                                 <p class="font-semibold text-gray-300 mb-4">Esslingen, Germany (HQ)</p>
                                 <ul class="list-disc list-inside text-gray-300 space-y-3">
-                                    <li>Designed a hybrid MPC system to enhance the efficiency and autonomy of an industrial bioreactor process.</li>
-                                    <li>Integrated neural networks for system identification and reinforcement learning for controller auto-tuning.</li>
-                                    <li>Implemented advanced state estimation algorithms (EKF, UKF, MHE) for robust performance.</li>
-                                    <li>Engineered the system for real-time deployment, culminating in Hardware-in-the-Loop (HiL) validation.</li>
+                                    <li><strong>Multivariable Control:</strong> Architected an Adaptive LTV-MPC for a complex MIMO plant to manage nonlinear dynamics via real-time successive linearization.</li>
+                                    <li><strong>State Estimation:</strong> Developed an Augmented EKF (AEKF) to estimate unmeasured internal states and adapt to time-varying physical parameters in real-time.</li>
+                                    <li><strong>Safety Critical Control:</strong> Enforced hard actuator constraints within the QP solver to prevent failure modes, verifying real-time feasibility for Industrial PLC execution.</li>
                                 </ul>
                            </div>
                         </div>
@@ -239,9 +242,9 @@
                                 <h3 class="text-2xl font-bold text-white mb-2">Process & Systems Engineer</h3>
                                  <p class="font-semibold text-gray-300 mb-4">Gujarat, India</p>
                                 <ul class="list-disc list-inside text-gray-300 space-y-3">
-                                    <li>Conducted root cause analysis for production processes for automotive clients like VW, Suzuki, and TATA.</li>
-                                    <li>Developed technical specifications for new laboratory equipment and oversaw its procurement and validation.</li>
-                                    <li>Designed the layout and operational workflows for a new calibration lab to meet NABL/ISO-17025 standards.</li>
+                                    <li><strong>Process Optimization:</strong> Conducted Root Cause Analysis (RCA) for automated production processes and delivered data-driven solutions to major automotive clients.</li>
+                                    <li><strong>Project Management:</strong> Organized technical specification, procurement, and validation of new automated laboratory equipment, managing project from conception to handover.</li>
+                                    <li><strong>Quality & Compliance:</strong> Designed operational workflows for a new calibration lab, achieving global NABL/ISO-17025 compliance.</li>
                                 </ul>
                            </div>
                         </div>
@@ -256,28 +259,28 @@
                 <h2 class="text-4xl font-bold text-center text-white mb-16 section-heading">Projects</h2>
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                     <div class="glass-effect rounded-xl p-6 project-card">
-                        <h3 class="text-xl font-bold text-white">AI-Supervised IIoT Control System</h3>
-                        <p class="text-gray-400 mt-2 text-sm">A containerized IIoT pipeline for real-time motor monitoring, anomaly detection, and AI-supervised control.</p>
+                        <h3 class="text-xl font-bold text-white">Hybrid AI-PID Control Loop</h3>
+                        <p class="text-gray-400 mt-2 text-sm">Designed a hybrid control architecture integrating a classic PID controller with a PyTorch Autoencoder supervisor for autonomous fault recovery in IIoT systems.</p>
                     </div>
                     <div class="glass-effect rounded-xl p-6 project-card">
-                        <h3 class="text-xl font-bold text-white">Advanced LiDAR Simulation</h3>
-                        <p class="text-gray-400 mt-2 text-sm">Monte Carlo photon transport model to study LiDAR performance in harsh industrial environments.</p>
+                        <h3 class="text-xl font-bold text-white">Physics-Based LiDAR Simulation</h3>
+                        <p class="text-gray-400 mt-2 text-sm">Engineered an Object-Oriented Monte Carlo transport engine in Python to simulate signal distortion from Fresnel reflection and stochastic surface roughness.</p>
                     </div>
                     <div class="glass-effect rounded-xl p-6 project-card">
-                        <h3 class="text-xl font-bold text-white">Manipulator Robot Automation</h3>
-                        <p class="text-gray-400 mt-2 text-sm">Programmed a 3-DOF robotic arm using MATLAB & Simulink with inverse kinematics and PID control.</p>
+                        <h3 class="text-xl font-bold text-white">3-DOF Manipulator Control</h3>
+                        <p class="text-gray-400 mt-2 text-sm">Implemented inverse kinematics and PID trajectory tracking for a 3-DOF robotic arm using MATLAB & Simulink, validating joint-space control logic.</p>
                     </div>
                     <div class="glass-effect rounded-xl p-6 project-card">
-                        <h3 class="text-xl font-bold text-white">Autonomous Robot Simulation</h3>
-                        <p class="text-gray-400 mt-2 text-sm">ROS 2 and Gazebo simulation for a warehouse robot with SLAM, path planning, and obstacle avoidance.</p>
+                        <h3 class="text-xl font-bold text-white">Autonomous Warehouse Robot</h3>
+                        <p class="text-gray-400 mt-2 text-sm">Developed a ROS 2 Navigation stack simulation in Gazebo, implementing SLAM (AMCL) and A* path planning for dynamic obstacle avoidance.</p>
                     </div>
                     <div class="glass-effect rounded-xl p-6 project-card">
-                        <h3 class="text-xl font-bold text-white">CNN-Based Crop Disease Detection</h3>
-                        <p class="text-gray-400 mt-2 text-sm">Developed a CNN model and mobile app to classify plant diseases, optimized with TensorFlow Lite.</p>
+                        <h3 class="text-xl font-bold text-white">Edge AI Disease Detection</h3>
+                        <p class="text-gray-400 mt-2 text-sm">Deployed a quantized CNN model on mobile edge devices using TensorFlow Lite, achieving high-accuracy real-time plant disease classification.</p>
                     </div>
                     <div class="glass-effect rounded-xl p-6 project-card">
-                        <h3 class="text-xl font-bold text-white">AI-Powered Study Chatbot</h3>
-                        <p class="text-gray-400 mt-2 text-sm">Built a chatbot using semantic search (FAISS) and text simplification (BART) to assist with PDF navigation.</p>
+                        <h3 class="text-xl font-bold text-white">RAG-Based Study Assistant</h3>
+                        <p class="text-gray-400 mt-2 text-sm">Built a Retrieval-Augmented Generation (RAG) system using FAISS for semantic search and BART for text simplification to navigate complex PDF technical docs.</p>
                     </div>
                 </div>
             </div>
@@ -287,19 +290,69 @@
         <section id="skills" class="section-min-height relative flex items-center justify-center p-8 overflow-hidden">
             <div id="skills-canvas-container"></div>
             <div class="max-w-4xl mx-auto reveal w-full z-10">
-                <h2 class="text-4xl font-bold text-center text-white mb-16 section-heading">Core Competencies</h2>
+                <h2 class="text-4xl font-bold text-center text-white mb-16 section-heading">Skills</h2>
                 <div class="space-y-10">
                     <div>
-                        <h3 class="text-xl font-semibold text-cyan-300 mb-4">Industrial AI & Advanced Control</h3>
-                        <div class="flex flex-wrap gap-3"><span class="glass-effect text-sm px-4 py-2 rounded-lg">Model Predictive Control (MPC)</span><span class="glass-effect text-sm px-4 py-2 rounded-lg">Reinforcement Learning</span><span class="glass-effect text-sm px-4 py-2 rounded-lg">State Estimation (EKF, UKF, MHE)</span><span class="glass-effect text-sm px-4 py-2 rounded-lg">System Identification</span></div>
+                        <h3 class="text-xl font-semibold text-cyan-300 mb-4">Advanced Control & Automation</h3>
+                        <div class="flex flex-wrap gap-3">
+                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">Model Predictive Control (MPC)</span>
+                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">Active Constraint Handling</span>
+                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">State Estimation (EKF/AEKF)</span>
+                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">Sensor Fusion</span>
+                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">Parameter Identification</span>
+                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">HiL</span>
+                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">Real-Time Systems</span>
+                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">Digital Twins</span>
+                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">PLC (ST/OOP/IEC 61131-3)</span>
+                        </div>
                     </div>
                     <div>
-                        <h3 class="text-xl font-semibold text-cyan-300 mb-4">Software & Deployment</h3>
-                        <div class="flex flex-wrap gap-3"><span class="glass-effect text-sm px-4 py-2 rounded-lg">C++ (Embedded)</span><span class="glass-effect text-sm px-4 py-2 rounded-lg">Python (PyTorch, Flask)</span><span class="glass-effect text-sm px-4 py-2 rounded-lg">Docker</span><span class="glass-effect text-sm px-4 py-2 rounded-lg">Git/GitHub</span><span class="glass-effect text-sm px-4 py-2 rounded-lg">CI/CD Pipelines</span><span class="glass-effect text-sm px-4 py-2 rounded-lg">TDD</span></div>
+                        <h3 class="text-xl font-semibold text-cyan-300 mb-4">Artificial Intelligence</h3>
+                        <div class="flex flex-wrap gap-3">
+                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">PINNs</span>
+                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">Neural ODEs</span>
+                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">Hybrid Modeling</span>
+                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">Generative AI</span>
+                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">LLMs</span>
+                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">Deep RL</span>
+                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">Safe RL</span>
+                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">Autoencoders</span>
+                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">SINDy</span>
+                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">Virtual Sensing</span>
+                        </div>
                     </div>
                     <div>
-                        <h3 class="text-xl font-semibold text-cyan-300 mb-4">Industrial Automation & Simulation</h3>
-                        <div class="flex flex-wrap gap-3"><span class="glass-effect text-sm px-4 py-2 rounded-lg">PLC Programming (Siemens S7)</span><span class="glass-effect text-sm px-4 py-2 rounded-lg">OPC UA</span><span class="glass-effect text-sm px-4 py-2 rounded-lg">Hardware-in-the-Loop (HiL)</span><span class="glass-effect text-sm px-4 py-2 rounded-lg">MATLAB/Simulink</span><span class="glass-effect text-sm px-4 py-2 rounded-lg">CasADi</span></div>
+                        <h3 class="text-xl font-semibold text-cyan-300 mb-4">Software & Embedded Development</h3>
+                        <div class="flex flex-wrap gap-3">
+                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">Python (PyTorch, CasADi, Streamlit)</span>
+                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">C++ (Embedded)</span>
+                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">MATLAB/Simulink</span>
+                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">RTOS (FreeRTOS)</span>
+                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">ARM Cortex-M</span>
+                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">Docker</span>
+                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">CI/CD</span>
+                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">TDD</span>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold text-cyan-300 mb-4">Industrial Connectivity & Cloud</h3>
+                        <div class="flex flex-wrap gap-3">
+                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">MQTT</span>
+                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">OPC UA</span>
+                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">InfluxDB</span>
+                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">Grafana</span>
+                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">AWS IoT</span>
+                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">Azure IoT</span>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold text-cyan-300 mb-4">Standards & Methodologies</h3>
+                        <div class="flex flex-wrap gap-3">
+                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">VDI 2206</span>
+                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">ISO 13849</span>
+                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">Agile</span>
+                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">Lean Six Sigma</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -310,7 +363,7 @@
             <div class="max-w-2xl mx-auto reveal z-10">
                 <h2 class="text-4xl font-bold text-center text-white mb-4 section-heading">Get In Touch</h2>
                 <p class="text-lg text-gray-400 mb-8">
-                    I'm currently seeking new opportunities and am open to collaboration. Whether you have a question or just want to connect, my inbox is always open.
+                    I am currently open to new opportunities in Advanced Control and Industrial AI. Whether you have a challenging project in mind or just want to connect, feel free to reach out.
                 </p>
                 <a href="mailto:sahil.jasani@student.uni-siegen.de" class="inline-block bg-cyan-600 hover:bg-cyan-500 text-white font-semibold text-lg px-8 py-4 rounded-lg transition duration-300 transform hover:scale-105 shadow-lg shadow-cyan-600/20">
                     Say Hello
@@ -561,4 +614,3 @@
     </script>
 </body>
 </html>
-
