@@ -258,6 +258,12 @@
 
 <body class="bg-grid">
 
+    <!-- Terminal Boot-up Loader -->
+    <div id="boot-loader" class="fixed inset-0 z-[100] bg-[#060913] flex flex-col justify-center items-start p-8 md:p-24 font-mono text-sm md:text-base transition-opacity duration-700">
+        <div id="terminal-text" class="text-[#64ffda] space-y-2"></div>
+        <div class="mt-2 text-[#0091dc] flex items-center">><span class="w-2 h-4 ml-1 bg-[#0091dc] animate-pulse inline-block"></span></div>
+    </div>
+
     <!-- Scroll Progress Bar -->
     <div id="scroll-progress"></div>
 
@@ -269,10 +275,12 @@
 
     <!-- Floating Navigation (Festo Style) -->
     <header class="glass-effect fixed top-6 left-1/2 -translate-x-1/2 w-[95%] max-w-5xl z-50 rounded-full transition-all duration-300">
-        <nav class="flex items-center justify-between p-3 px-6">
+        <nav class="flex items-center justify-between p-3 px-6 relative">
             <a href="#hero" class="text-xl font-bold font-mono text-[#0091dc] tracking-tighter hover:text-[#64ffda] transition">
                 <span class="text-white">S</span>J.
             </a>
+            
+            <!-- Desktop Menu -->
             <div class="hidden md:flex items-center space-x-2 font-mono text-sm">
                 <a href="#about" class="nav-link px-4 py-2 rounded-full text-gray-300 hover:text-[#64ffda] hover:bg-[#112240] transition">01. About</a>
                 <a href="#experience" class="nav-link px-4 py-2 rounded-full text-gray-300 hover:text-[#64ffda] hover:bg-[#112240] transition">02. Experience</a>
@@ -280,9 +288,27 @@
                 <a href="#projects" class="nav-link px-4 py-2 rounded-full text-gray-300 hover:text-[#64ffda] hover:bg-[#112240] transition">04. Projects</a>
                 <a href="#contact" class="nav-link px-4 py-2 rounded-full text-gray-300 hover:text-[#64ffda] hover:bg-[#112240] transition">05. Contact</a>
             </div>
-            <a href="cv/Sahil_Jasani_Lebenslauf_2026-02-26.pdf" target="_blank" class="px-6 py-2 border border-[#0091dc] text-[#0091dc] font-mono text-sm rounded-full hover:bg-[#0091dc]/10 transition shadow-[0_0_15px_rgba(0,145,220,0.2)]">
-                CV
-            </a>
+            
+            <div class="hidden md:block">
+                <a href="cv/Sahil_Jasani_Lebenslauf_2026-02-26.pdf" target="_blank" class="px-6 py-2 border border-[#0091dc] text-[#0091dc] font-mono text-sm rounded-full hover:bg-[#0091dc]/10 transition shadow-[0_0_15px_rgba(0,145,220,0.2)]">
+                    CV
+                </a>
+            </div>
+
+            <!-- Hamburger Button (Mobile) -->
+            <button id="mobile-menu-btn" class="md:hidden text-[#0091dc] hover:text-[#64ffda] focus:outline-none transition">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+            </button>
+            
+            <!-- Mobile Dropdown Menu -->
+            <div id="mobile-menu" class="absolute top-full left-0 w-full mt-4 glass-effect rounded-2xl p-4 flex flex-col space-y-4 font-mono text-sm transform scale-95 opacity-0 pointer-events-none transition-all duration-300 origin-top border border-[#1e2d4a]">
+                <a href="#about" class="mobile-link text-gray-300 hover:text-[#64ffda] p-2 rounded hover:bg-[#112240] transition">01. About</a>
+                <a href="#experience" class="mobile-link text-gray-300 hover:text-[#64ffda] p-2 rounded hover:bg-[#112240] transition">02. Experience</a>
+                <a href="#education" class="mobile-link text-gray-300 hover:text-[#64ffda] p-2 rounded hover:bg-[#112240] transition">03. Education</a>
+                <a href="#projects" class="mobile-link text-gray-300 hover:text-[#64ffda] p-2 rounded hover:bg-[#112240] transition">04. Projects</a>
+                <a href="#contact" class="mobile-link text-gray-300 hover:text-[#64ffda] p-2 rounded hover:bg-[#112240] transition">05. Contact</a>
+                <a href="cv/Sahil_Jasani_Lebenslauf_2026-02-26.pdf" target="_blank" class="mobile-link text-[#0091dc] border border-[#0091dc] text-center p-2 rounded hover:bg-[#0091dc]/10 transition">Download CV</a>
+            </div>
         </nav>
     </header>
 
@@ -709,9 +735,85 @@
             </div>
             <p>Designed & Built by Sahil Jasani</p>
         </footer>
+
+        <!-- Back to Top Button -->
+        <button id="back-to-top" class="fixed bottom-8 right-8 z-40 p-3 rounded-full bg-[#0d1627] border border-[#1e2d4a] text-[#0091dc] opacity-0 translate-y-10 pointer-events-none transition-all duration-300 hover:border-[#64ffda] hover:text-[#64ffda] hover:shadow-[0_0_15px_rgba(100,255,218,0.3)] focus:outline-none">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg>
+        </button>
     </main>
 
     <script>
+        // --- Terminal Boot Sequence ---
+        const bootLoader = document.getElementById('boot-loader');
+        const terminalText = document.getElementById('terminal-text');
+        const bootLines = [
+            "INITIALIZING KERNEL... [OK]",
+            "LOADING DIGITAL TWIN ENVIRONMENT... [OK]",
+            "ESTABLISHING IIoT UPLINK... [OK]",
+            "ACCESS GRANTED."
+        ];
+
+        // Lock scroll while loading
+        document.body.style.overflow = 'hidden';
+
+        async function runBootSequence() {
+            if(!bootLoader) return;
+            for (let i = 0; i < bootLines.length; i++) {
+                // Random typing delay
+                await new Promise(r => setTimeout(r, 200 + Math.random() * 300));
+                const p = document.createElement('p');
+                p.textContent = bootLines[i];
+                terminalText.appendChild(p);
+            }
+            await new Promise(r => setTimeout(r, 500));
+            bootLoader.style.opacity = '0';
+            setTimeout(() => {
+                bootLoader.style.display = 'none';
+                document.body.style.overflow = ''; // Unlock scroll
+            }, 700);
+        }
+        window.addEventListener('load', runBootSequence);
+
+        // --- Mobile Menu Toggle ---
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+        let isMenuOpen = false;
+
+        mobileMenuBtn.addEventListener('click', () => {
+            isMenuOpen = !isMenuOpen;
+            if(isMenuOpen) {
+                mobileMenu.classList.remove('scale-95', 'opacity-0', 'pointer-events-none');
+                mobileMenu.classList.add('scale-100', 'opacity-100', 'pointer-events-auto');
+            } else {
+                mobileMenu.classList.add('scale-95', 'opacity-0', 'pointer-events-none');
+                mobileMenu.classList.remove('scale-100', 'opacity-100', 'pointer-events-auto');
+            }
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                isMenuOpen = false;
+                mobileMenu.classList.add('scale-95', 'opacity-0', 'pointer-events-none');
+                mobileMenu.classList.remove('scale-100', 'opacity-100', 'pointer-events-auto');
+            });
+        });
+
+        // --- Back to Top Button ---
+        const backToTopBtn = document.getElementById('back-to-top');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 500) {
+                backToTopBtn.classList.remove('opacity-0', 'translate-y-10', 'pointer-events-none');
+                backToTopBtn.classList.add('opacity-100', 'translate-y-0', 'pointer-events-auto');
+            } else {
+                backToTopBtn.classList.add('opacity-0', 'translate-y-10', 'pointer-events-none');
+                backToTopBtn.classList.remove('opacity-100', 'translate-y-0', 'pointer-events-auto');
+            }
+        });
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
         // --- Spotlight Hover Effect for Cards ---
         document.querySelectorAll('.hmi-card').forEach(card => {
             card.addEventListener('mousemove', e => {
