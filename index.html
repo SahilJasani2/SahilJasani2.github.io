@@ -13,8 +13,8 @@
     <meta property="og:url" content="https://your-custom-domain.com/"> <!-- UPDATE THIS LATER -->
     <meta property="og:image" content="https://your-custom-domain.com/images/og-preview.png"> <!-- Create a 1200x630px screenshot of your site and save it here -->
     
-    <!-- Favicon (Fallback SVG) -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚙️</text></svg>">
+    <!-- Favicon (Ultra-clear SJ Logo) -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%230d1627%22/><text x=%2250%25%22 y=%2256%25%22 font-family=%22monospace%22 font-size=%2265%22 font-weight=%22bold%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22><tspan fill=%22%23ffffff%22>S</tspan><tspan fill=%22%230091dc%22>J</tspan></text></svg>">
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -602,10 +602,18 @@
                     </div>
                     <h3 class="text-xl font-bold text-white mb-2 group-hover:text-[#64ffda] transition relative z-10">Hybrid HiL Thermal Control</h3>
                     <p class="text-gray-400 text-sm mb-6 flex-grow relative z-10">Connected a Python FOPDT thermodynamics model to a CODESYS PLC via Modbus TCP. Implemented an FSM in ST and a PID loop maintaining stability within ±0.5°C.</p>
-                    <div class="flex flex-wrap gap-2 mt-auto relative z-10">
-                        <span class="font-mono text-xs text-gray-500">CODESYS (ST)</span>
-                        <span class="font-mono text-xs text-gray-500">Modbus TCP</span>
-                        <span class="font-mono text-xs text-gray-500">HiL</span>
+                    <div class="flex flex-col gap-4 mt-auto relative z-10">
+                        <div class="flex flex-wrap gap-2">
+                            <span class="tech-tag">CODESYS (ST)</span>
+                            <span class="tech-tag">Modbus TCP</span>
+                            <span class="tech-tag">HiL</span>
+                        </div>
+                        <div class="border-t border-[#1e2d4a] pt-4 mt-2">
+                            <a href="https://github.com/SahilJasani2/Your-Repo-Link-Here" target="_blank" class="text-xs font-mono text-gray-400 hover:text-[#64ffda] flex items-center gap-2 transition w-fit">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.108-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.91 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path></svg>
+                                View Source Code
+                            </a>
+                        </div>
                     </div>
                 </div>
 
@@ -617,10 +625,18 @@
                     </div>
                     <h3 class="text-xl font-bold text-white mb-2 group-hover:text-[#64ffda] transition relative z-10">AI-Supervised IIoT Control</h3>
                     <p class="text-gray-400 text-sm mb-6 flex-grow relative z-10">Integrated a field-level PID controller with a PyTorch Autoencoder supervisor. Fused vibration/thermal data via an EKF and built an AsyncIO telemetry pipeline.</p>
-                    <div class="flex flex-wrap gap-2 mt-auto relative z-10">
-                        <span class="font-mono text-xs text-gray-500">PyTorch</span>
-                        <span class="font-mono text-xs text-gray-500">OPC UA / MQTT</span>
-                        <span class="font-mono text-xs text-gray-500">Docker</span>
+                    <div class="flex flex-col gap-4 mt-auto relative z-10">
+                        <div class="flex flex-wrap gap-2">
+                            <span class="tech-tag">PyTorch</span>
+                            <span class="tech-tag">OPC UA / MQTT</span>
+                            <span class="tech-tag">Docker</span>
+                        </div>
+                        <div class="border-t border-[#1e2d4a] pt-4 mt-2">
+                            <a href="https://github.com/SahilJasani2/Your-Repo-Link-Here" target="_blank" class="text-xs font-mono text-gray-400 hover:text-[#64ffda] flex items-center gap-2 transition w-fit">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.108-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.91 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path></svg>
+                                View Source Code
+                            </a>
+                        </div>
                     </div>
                 </div>
 
@@ -633,10 +649,18 @@
                     <h3 class="text-xl font-bold text-white mb-1 group-hover:text-[#64ffda] transition relative z-10">Advanced LiDAR Simulation</h3>
                     <p class="text-xs text-[#0091dc] font-mono mb-3 relative z-10">Supervised by Prof. Dr. Ivo Ihrke</p>
                     <p class="text-gray-400 text-sm mb-6 flex-grow relative z-10">Engineered an Object-Oriented Monte Carlo transport engine in Python modeling Henyey-Greenstein scattering, Fresnel reflection, and stochastic surface roughness.</p>
-                    <div class="flex flex-wrap gap-2 mt-auto relative z-10">
-                        <span class="font-mono text-xs text-gray-500">Python (NumPy)</span>
-                        <span class="font-mono text-xs text-gray-500">Monte Carlo</span>
-                        <span class="font-mono text-xs text-gray-500">Physics Modeling</span>
+                    <div class="flex flex-col gap-4 mt-auto relative z-10">
+                        <div class="flex flex-wrap gap-2">
+                            <span class="tech-tag">Python (NumPy)</span>
+                            <span class="tech-tag">Monte Carlo</span>
+                            <span class="tech-tag">Physics Modeling</span>
+                        </div>
+                        <div class="border-t border-[#1e2d4a] pt-4 mt-2">
+                            <a href="https://github.com/SahilJasani2/Your-Repo-Link-Here" target="_blank" class="text-xs font-mono text-gray-400 hover:text-[#64ffda] flex items-center gap-2 transition w-fit">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.108-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.91 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path></svg>
+                                View Source Code
+                            </a>
+                        </div>
                     </div>
                 </div>
 
@@ -647,10 +671,18 @@
                     </div>
                     <h3 class="text-xl font-bold text-white mb-2 group-hover:text-[#64ffda] transition relative z-10">Autonomous Warehouse Robot</h3>
                     <p class="text-gray-400 text-sm mb-6 flex-grow relative z-10">Developed a ROS 2 Navigation stack simulation in Gazebo, implementing SLAM (AMCL) and A* path planning for dynamic obstacle avoidance.</p>
-                    <div class="flex flex-wrap gap-2 mt-auto relative z-10">
-                        <span class="font-mono text-xs text-gray-500">ROS 2</span>
-                        <span class="font-mono text-xs text-gray-500">Gazebo</span>
-                        <span class="font-mono text-xs text-gray-500">SLAM</span>
+                    <div class="flex flex-col gap-4 mt-auto relative z-10">
+                        <div class="flex flex-wrap gap-2">
+                            <span class="tech-tag">ROS 2</span>
+                            <span class="tech-tag">Gazebo</span>
+                            <span class="tech-tag">SLAM</span>
+                        </div>
+                        <div class="border-t border-[#1e2d4a] pt-4 mt-2">
+                            <a href="https://github.com/SahilJasani2/Your-Repo-Link-Here" target="_blank" class="text-xs font-mono text-gray-400 hover:text-[#64ffda] flex items-center gap-2 transition w-fit">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.108-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.91 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path></svg>
+                                View Source Code
+                            </a>
+                        </div>
                     </div>
                 </div>
                 
@@ -661,10 +693,18 @@
                     </div>
                     <h3 class="text-xl font-bold text-white mb-2 group-hover:text-[#64ffda] transition relative z-10">Edge AI Disease Detection</h3>
                     <p class="text-gray-400 text-sm mb-6 flex-grow relative z-10">Deployed a quantized CNN model on mobile edge devices using TensorFlow Lite, achieving high-accuracy real-time plant disease classification.</p>
-                    <div class="flex flex-wrap gap-2 mt-auto relative z-10">
-                        <span class="font-mono text-xs text-gray-500">TensorFlow Lite</span>
-                        <span class="font-mono text-xs text-gray-500">Edge AI</span>
-                        <span class="font-mono text-xs text-gray-500">Quantization</span>
+                    <div class="flex flex-col gap-4 mt-auto relative z-10">
+                        <div class="flex flex-wrap gap-2">
+                            <span class="tech-tag">TensorFlow Lite</span>
+                            <span class="tech-tag">Edge AI</span>
+                            <span class="tech-tag">Quantization</span>
+                        </div>
+                        <div class="border-t border-[#1e2d4a] pt-4 mt-2">
+                            <a href="https://github.com/SahilJasani2/Your-Repo-Link-Here" target="_blank" class="text-xs font-mono text-gray-400 hover:text-[#64ffda] flex items-center gap-2 transition w-fit">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.108-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.91 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path></svg>
+                                View Source Code
+                            </a>
+                        </div>
                     </div>
                 </div>
 
@@ -675,10 +715,18 @@
                     </div>
                     <h3 class="text-xl font-bold text-white mb-2 group-hover:text-[#64ffda] transition relative z-10">RAG-Based Study Assistant</h3>
                     <p class="text-gray-400 text-sm mb-6 flex-grow relative z-10">Built a Retrieval-Augmented Generation (RAG) system using FAISS for semantic search and BART for text simplification to navigate complex PDF technical docs.</p>
-                    <div class="flex flex-wrap gap-2 mt-auto relative z-10">
-                        <span class="font-mono text-xs text-gray-500">LLMs / RAG</span>
-                        <span class="font-mono text-xs text-gray-500">FAISS</span>
-                        <span class="font-mono text-xs text-gray-500">BART</span>
+                    <div class="flex flex-col gap-4 mt-auto relative z-10">
+                        <div class="flex flex-wrap gap-2">
+                            <span class="tech-tag">LLMs / RAG</span>
+                            <span class="tech-tag">FAISS</span>
+                            <span class="tech-tag">BART</span>
+                        </div>
+                        <div class="border-t border-[#1e2d4a] pt-4 mt-2">
+                            <a href="https://github.com/SahilJasani2/Your-Repo-Link-Here" target="_blank" class="text-xs font-mono text-gray-400 hover:text-[#64ffda] flex items-center gap-2 transition w-fit">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.108-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.91 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path></svg>
+                                View Source Code
+                            </a>
+                        </div>
                     </div>
                 </div>
 
@@ -698,16 +746,17 @@
 
             <!-- Contact Details Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full text-left">
-                <!-- Email -->
-                <a href="mailto:jasanisahil11@gmail.com" class="hmi-card p-4 flex items-center space-x-4 group">
+                <!-- Email (Click to Copy) -->
+                <button onclick="copyEmail(this)" class="hmi-card p-4 flex items-center space-x-4 group w-full text-left focus:outline-none cursor-pointer">
                     <div class="p-3 bg-[#0a192f] rounded border border-[#1e2d4a] group-hover:border-[#0091dc] transition relative z-10">
-                        <svg class="w-6 h-6 text-[#0091dc]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                        <svg class="w-6 h-6 text-[#0091dc] email-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                        <svg class="w-6 h-6 text-[#64ffda] check-icon hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
                     </div>
                     <div class="relative z-10">
-                        <p class="text-xs text-gray-500 font-mono mb-1">Email</p>
+                        <p class="text-xs text-gray-500 font-mono mb-1 email-label transition-colors">Email (Click to Copy)</p>
                         <p class="text-gray-300 text-sm font-medium">jasanisahil11@gmail.com</p>
                     </div>
-                </a>
+                </button>
 
                 <!-- Phone -->
                 <a href="tel:+491756458087" class="hmi-card p-4 flex items-center space-x-4 group">
@@ -764,6 +813,45 @@
     </main>
 
     <script>
+        // --- Copy to Clipboard Function ---
+        function copyEmail(btn) {
+            const email = 'jasanisahil11@gmail.com';
+            
+            // iFrame safe copy method
+            const textArea = document.createElement("textarea");
+            textArea.value = email;
+            document.body.appendChild(textArea);
+            textArea.select();
+            try {
+                document.execCommand('copy');
+            } catch (err) {
+                console.error('Copy failed', err);
+            }
+            document.body.removeChild(textArea);
+
+            // UI Feedback
+            const label = btn.querySelector('.email-label');
+            const icon = btn.querySelector('.email-icon');
+            const check = btn.querySelector('.check-icon');
+            
+            label.textContent = 'Copied to clipboard!';
+            label.classList.remove('text-gray-500');
+            label.classList.add('text-[#64ffda]');
+            
+            icon.classList.add('hidden');
+            check.classList.remove('hidden');
+            
+            // Reset after 2.5s
+            setTimeout(() => {
+                label.textContent = 'Email (Click to Copy)';
+                label.classList.remove('text-[#64ffda]');
+                label.classList.add('text-gray-500');
+                
+                icon.classList.remove('hidden');
+                check.classList.add('hidden');
+            }, 2500);
+        }
+
         // --- Terminal Boot Sequence ---
         const bootLoader = document.getElementById('boot-loader');
         const terminalText = document.getElementById('terminal-text');
