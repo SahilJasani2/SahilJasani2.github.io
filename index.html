@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sahil Jasani — Advanced Control & AI Engineer</title>
+    <title>Sahil Jasani — Automation & Industrial AI Engineer</title>
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -11,409 +11,644 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 
     <!-- Three.js for 3D animation -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
-    <style>
-        :root {
-            --accent-color: #0091dc; /* Festo-inspired Blue */
-            --accent-glow: rgba(0, 145, 220, 0.5);
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        festo: {
+                            blue: '#0091dc',
+                            dark: '#0a192f',
+                            card: '#112240',
+                            border: '#233554'
+                        }
+                    }
+                }
+            }
         }
+    </script>
+
+    <style>
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0A0A10; /* Near-black */
-            color: #E0E0E0;
+            background-color: #060913; /* Very dark blue/black, like an industrial terminal */
+            color: #8892b0;
             overflow-x: hidden;
         }
-        .themed-gradient-bg {
-            background-color: #0A0A10;
-            background-image: 
-                radial-gradient(at 15% 15%, hsla(205, 100%, 43%, 0.2) 0px, transparent 50%),
-                radial-gradient(at 85% 85%, hsla(220, 70%, 25%, 0.15) 0px, transparent 50%);
-        }
+        
+        h1, h2, h3, h4 { color: #ccd6f6; }
+        
+        .accent-text { color: #64ffda; } /* Cyan/Emerald cross for "Running" status */
+        .accent-festo { color: #0091dc; }
+
+        /* Floating Nav Glass Effect */
         .glass-effect {
-            background: rgba(16, 16, 32, 0.5);
+            background: rgba(6, 9, 19, 0.7);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(0, 145, 220, 0.1);
-            transition: border-color 0.3s ease;
+            border: 1px solid #1e2d4a;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
         }
+        
         .nav-link.active {
-            color: #fff;
-            background-color: var(--accent-color);
-            box-shadow: 0 0 15px var(--accent-glow);
+            color: #64ffda;
+            background-color: rgba(100, 255, 218, 0.1);
+            border-color: rgba(100, 255, 218, 0.3);
         }
-        .section-min-height { min-height: 100vh; }
-        .reveal {
-            opacity: 0;
-            transform: translateY(50px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+
+        .hmi-card {
+            background-color: #0d1627;
+            border: 1px solid #1e2d4a;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
         }
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
+        
+        .hmi-card:hover {
+            border-color: #0091dc;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px -15px rgba(0, 145, 220, 0.2);
         }
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #0A0A10; }
-        ::-webkit-scrollbar-thumb { background: #007ab5; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--accent-color); }
-        .project-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(0, 145, 220, 0.4);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+
+        .tech-tag {
+            background-color: rgba(0, 145, 220, 0.1);
+            color: #64ffda;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            border: 1px solid rgba(100, 255, 218, 0.2);
         }
+
+        /* Status Blinker */
+        .status-dot {
+            height: 10px;
+            width: 10px;
+            background-color: #64ffda;
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 10px #64ffda;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(100, 255, 218, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(100, 255, 218, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(100, 255, 218, 0); }
+        }
+
+        /* Background grid lines for structural feel */
+        .bg-grid {
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+        }
+
         #hero-canvas {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 0;
+            z-index: -1;
+            opacity: 0.6;
             pointer-events: none;
         }
-        .section-heading {
-            position: relative;
-            display: inline-block;
-            padding-bottom: 0.5rem;
-        }
-        .section-heading::after {
-            content: '';
+
+        /* Timeline styles */
+        .timeline-line {
             position: absolute;
+            left: 15px;
+            top: 0;
             bottom: 0;
-            left: 50%;
+            width: 2px;
+            background: #1e2d4a;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 15px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #060913;
+            border: 2px solid #0091dc;
             transform: translateX(-50%);
-            width: 60px;
-            height: 3px;
-            background: linear-gradient(90deg, #007ab5, var(--accent-color));
-            border-radius: 2px;
+            margin-top: 6px;
+            z-index: 10;
         }
-        .exp-tab {
-            cursor: pointer;
-            padding: 1rem;
-            border-radius: 0.5rem;
-            transition: all 0.3s ease;
-            border: 1px solid transparent;
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
         }
-        .exp-tab:hover {
-            background-color: rgba(0, 145, 220, 0.1);
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
-        .exp-tab.active {
-            background-color: rgba(0, 145, 220, 0.15);
-            border-color: rgba(0, 145, 220, 0.3);
-            color: var(--accent-color);
-        }
-        .exp-content {
-            display: none;
-            animation: fadeIn 0.5s ease;
-        }
-        .exp-content.active {
-            display: block;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .animated-grid-bg {
-            position: relative;
-            overflow: hidden;
-        }
-        .animated-grid-bg::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 200%;
-            height: 200%;
-            background-image: 
-                linear-gradient(to right, rgba(0, 145, 220, 0.1) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(0, 145, 220, 0.1) 1px, transparent 1px);
-            background-size: 40px 40px;
-            animation: moveGrid 20s linear infinite;
-            z-index: 0;
-        }
-        @keyframes moveGrid {
-            from { transform: translate(0, 0); }
-            to { transform: translate(-50%, -50%); }
-        }
-        #skills-canvas-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            opacity: 0.3;
-        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #060913; }
+        ::-webkit-scrollbar-thumb { background: #1e2d4a; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #0091dc; }
     </style>
 </head>
 
-<body class="themed-gradient-bg">
+<body class="bg-grid">
 
+    <!-- Lorenz Attractor Background -->
     <div id="hero-canvas"></div>
 
-    <!-- Header & Navigation -->
-    <header id="main-header" class="glass-effect fixed top-4 left-1/2 -translate-x-1/2 w-[95%] max-w-4xl z-50 rounded-full transition-all duration-300">
-        <nav class="flex items-center justify-between p-2">
-            <a href="#introduction" class="text-xl font-bold text-white pl-4 hover:text-cyan-300 transition">SJ</a>
-            <div class="hidden md:flex items-center space-x-2">
-                <a href="#summary" class="nav-link px-4 py-2 rounded-full text-sm font-medium text-gray-300 hover:bg-gray-800 transition">About</a>
-                <a href="#experience" class="nav-link px-4 py-2 rounded-full text-sm font-medium text-gray-300 hover:bg-gray-800 transition">Work Experience</a>
-                <a href="#projects" class="nav-link px-4 py-2 rounded-full text-sm font-medium text-gray-300 hover:bg-gray-800 transition">Projects</a>
-                <a href="#skills" class="nav-link px-4 py-2 rounded-full text-sm font-medium text-gray-300 hover:bg-gray-800 transition">Skills</a>
-                <a href="#contact" class="nav-link px-4 py-2 rounded-full text-sm font-medium text-gray-300 hover:bg-gray-800 transition">Contact</a>
+    <!-- Floating Navigation (Festo Style) -->
+    <header class="glass-effect fixed top-6 left-1/2 -translate-x-1/2 w-[95%] max-w-5xl z-50 rounded-full transition-all duration-300">
+        <nav class="flex items-center justify-between p-3 px-6">
+            <a href="#hero" class="text-xl font-bold font-mono text-[#0091dc] tracking-tighter hover:text-[#64ffda] transition">
+                <span class="text-white">S</span>J.
+            </a>
+            <div class="hidden md:flex items-center space-x-2 font-mono text-sm">
+                <a href="#about" class="nav-link px-4 py-2 rounded-full text-gray-300 hover:text-[#64ffda] hover:bg-[#112240] transition">01. About</a>
+                <a href="#experience" class="nav-link px-4 py-2 rounded-full text-gray-300 hover:text-[#64ffda] hover:bg-[#112240] transition">02. Experience</a>
+                <a href="#education" class="nav-link px-4 py-2 rounded-full text-gray-300 hover:text-[#64ffda] hover:bg-[#112240] transition">03. Education</a>
+                <a href="#projects" class="nav-link px-4 py-2 rounded-full text-gray-300 hover:text-[#64ffda] hover:bg-[#112240] transition">04. Projects</a>
+                <a href="#contact" class="nav-link px-4 py-2 rounded-full text-gray-300 hover:text-[#64ffda] hover:bg-[#112240] transition">05. Contact</a>
             </div>
-            <a href="#contact" class="text-white text-sm font-medium px-5 py-2.5 rounded-full transition mr-1 shadow-lg" style="background-color: var(--accent-color); box-shadow: 0 0 20px var(--accent-glow);">
-                Get in Touch
+            <a href="cv/Sahil_Jasani_Lebenslauf_2026-02-26.pdf" target="_blank" class="px-6 py-2 border border-[#0091dc] text-[#0091dc] font-mono text-sm rounded-full hover:bg-[#0091dc]/10 transition shadow-[0_0_15px_rgba(0,145,220,0.2)]">
+                CV
             </a>
         </nav>
     </header>
 
-    <main>
-        <!-- Section 1: Introduction -->
-        <section id="introduction" class="section-min-height relative flex items-center justify-center p-4 overflow-hidden">
-            <div class="text-center relative z-10 reveal">
-                <!-- Fallback/Placeholder Image Logic -->
-                <div class="w-40 h-40 rounded-full mx-auto mb-6 border-4 shadow-2xl overflow-hidden flex items-center justify-center bg-gray-800" style="border-color: rgba(0, 145, 220, 0.5);">
-                    <img src="images/profile_picture.png" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=Sahil+Jasani&background=0D8ABC&color=fff&size=256'" alt="Sahil Jasani" class="w-full h-full object-cover">
+    <main class="max-w-6xl mx-auto px-6 pt-32">
+        
+        <!-- Section 1: Hero -->
+        <section id="hero" class="min-h-[85vh] flex flex-col justify-center reveal items-start section-spy">
+            <div class="mb-6 flex items-center space-x-3 bg-[#0d1627] border border-[#1e2d4a] px-4 py-2 rounded-full font-mono text-xs">
+                <span class="status-dot"></span>
+                <span class="text-gray-300">Open to Work / Ready to Relocate</span>
+            </div>
+            
+            <div class="mb-8">
+                <img src="images/profile_picture.png" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=Sahil+Jasani&background=0091dc&color=fff&size=256'" alt="Sahil Jasani" class="w-28 h-28 md:w-32 md:h-32 rounded-full border-2 border-[#0091dc] shadow-[0_0_20px_rgba(0,145,220,0.3)] object-cover grayscale-[20%]">
+            </div>
+
+            <h1 class="text-gray-400 font-mono text-lg mb-4">Hi, my name is</h1>
+            <h2 class="text-5xl md:text-7xl font-bold text-white tracking-tight mb-2">Sahil Jasani.</h2>
+            <h3 class="text-4xl md:text-6xl font-bold text-gray-500 tracking-tight mb-8">I engineer intelligent automation.</h3>
+            
+            <p class="max-w-2xl text-lg text-gray-400 leading-relaxed mb-10">
+                I am an <strong class="text-white">Automation & Industrial AI Engineer</strong> bridging the gap between Robust Industrial Automation (OT) and modern Industrial AI (IT). I focus on deploying hybrid architectures—from IEC 61131-3 PLC logic to Deep Learning models—building autonomous, scalable systems for the real world.
+            </p>
+            
+            <div class="flex space-x-4 font-mono text-sm">
+                <a href="#projects" class="bg-[#0091dc] text-white px-6 py-3 rounded hover:bg-[#007ab5] transition">View Projects</a>
+                <a href="https://github.com/SahilJasani2" target="_blank" class="border border-[#1e2d4a] text-gray-300 px-6 py-3 rounded hover:border-[#0091dc] hover:text-[#0091dc] transition">GitHub</a>
+            </div>
+        </section>
+
+        <!-- Section 2: About & Skills Dashboard -->
+        <section id="about" class="py-20 reveal section-spy">
+            <div class="flex items-center mb-10">
+                <h2 class="text-2xl font-bold font-mono"><span class="accent-festo">01.</span> System Diagnostic (About Me)</h2>
+                <div class="h-px bg-[#1e2d4a] flex-grow ml-6"></div>
+            </div>
+
+            <div class="grid md:grid-cols-1 gap-10">
+                
+                <!-- Redesigned About Me Text -->
+                <div class="max-w-4xl">
+                    <p class="text-lg text-gray-300 mb-6 border-l-4 border-[#0091dc] pl-4 leading-relaxed bg-[#0091dc]/5 py-3 pr-4 rounded-r">
+                        My background lies at the exact intersection of classical control theory and modern data-driven approaches. I have hands-on experience in architecting Digital Twins, Adaptive LTV-MPC, and State & Parameter Estimation frameworks for complex nonlinear systems.
+                    </p>
+                    <div class="grid md:grid-cols-2 gap-8 text-gray-400 leading-relaxed mt-8">
+                        <p>
+                            Currently, my focus is developing robust <strong class="text-gray-300">Steuerungstechnik (OT)</strong> using CODESYS and TwinCAT, and bridging it with modern IT tools like Python, Docker, and IIoT protocols. My goal is to write modular, maintainable code that runs securely in continuous operation while leveraging AI for optimization.
+                        </p>
+                        <p>
+                            I am fluent in English and possess <strong class="text-gray-300">B2-level German</strong> proficiency, actively utilizing it in daily technical and professional environments.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Skills HMI Panel -->
+                <div class="hmi-card p-6 md:p-8 mt-4">
+                    <h3 class="text-white font-mono border-b border-[#1e2d4a] pb-4 mb-6 flex items-center">
+                        <span class="w-2 h-2 bg-[#0091dc] rounded-full mr-3 animate-pulse"></span>
+                        Technical Competencies
+                    </h3>
+                    
+                    <!-- Redesigned Skills Layout: Horizontal Rows -->
+                    <div class="space-y-4">
+                        <!-- Category 1 -->
+                        <div class="flex flex-col md:flex-row md:items-start gap-4 p-4 rounded-lg bg-[#060913]/50 border border-[#1e2d4a]/50 hover:border-[#0091dc]/50 transition">
+                            <div class="md:w-1/3 shrink-0">
+                                <p class="text-xs font-bold text-[#0091dc] font-mono uppercase tracking-widest mb-2 md:mb-0">Advanced Control & Automation</p>
+                            </div>
+                            <div class="md:w-2/3 flex flex-wrap gap-2">
+                                <span class="tech-tag">MPC</span>
+                                <span class="tech-tag">Active Constraints</span>
+                                <span class="tech-tag">State Estimation</span>
+                                <span class="tech-tag">Soft Sensors</span>
+                                <span class="tech-tag">Sensor Fusion</span>
+                                <span class="tech-tag">Parameter ID</span>
+                                <span class="tech-tag">HiL</span>
+                                <span class="tech-tag">Real-Time Systems</span>
+                                <span class="tech-tag">Rapid Prototyping</span>
+                                <span class="tech-tag">Digital Twins</span>
+                                <span class="tech-tag">CODESYS / TwinCAT</span>
+                                <span class="tech-tag">Structured Text (ST)</span>
+                                <span class="tech-tag">OOP</span>
+                                <span class="tech-tag">TIA Portal</span>
+                                <span class="tech-tag">VDI 2206</span>
+                                <span class="tech-tag">ISO 13849</span>
+                                <span class="tech-tag">Lean Six Sigma</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Category 2 -->
+                        <div class="flex flex-col md:flex-row md:items-start gap-4 p-4 rounded-lg bg-[#060913]/50 border border-[#1e2d4a]/50 hover:border-[#0091dc]/50 transition">
+                            <div class="md:w-1/3 shrink-0">
+                                <p class="text-xs font-bold text-[#0091dc] font-mono uppercase tracking-widest mb-2 md:mb-0">Artificial Intelligence</p>
+                            </div>
+                            <div class="md:w-2/3 flex flex-wrap gap-2">
+                                <span class="tech-tag">PINNs</span>
+                                <span class="tech-tag">Neural ODEs</span>
+                                <span class="tech-tag">Hybrid Modeling</span>
+                                <span class="tech-tag">Generative AI</span>
+                                <span class="tech-tag">LLMs</span>
+                                <span class="tech-tag">Deep RL</span>
+                                <span class="tech-tag">Safe RL</span>
+                                <span class="tech-tag">Anomaly Detection</span>
+                                <span class="tech-tag">SINDy</span>
+                                <span class="tech-tag">Virtual Sensing</span>
+                            </div>
+                        </div>
+
+                        <!-- Category 3 -->
+                        <div class="flex flex-col md:flex-row md:items-start gap-4 p-4 rounded-lg bg-[#060913]/50 border border-[#1e2d4a]/50 hover:border-[#0091dc]/50 transition">
+                            <div class="md:w-1/3 shrink-0">
+                                <p class="text-xs font-bold text-[#0091dc] font-mono uppercase tracking-widest mb-2 md:mb-0">Software & Embedded</p>
+                            </div>
+                            <div class="md:w-2/3 flex flex-wrap gap-2">
+                                <span class="tech-tag">Python (PyTorch / CasADi)</span>
+                                <span class="tech-tag">C++</span>
+                                <span class="tech-tag">MATLAB / Simulink</span>
+                                <span class="tech-tag">FreeRTOS</span>
+                                <span class="tech-tag">ARM Cortex-M</span>
+                                <span class="tech-tag">Docker / CI/CD</span>
+                                <span class="tech-tag">GitHub Actions</span>
+                                <span class="tech-tag">TDD</span>
+                                <span class="tech-tag">MQTT / OPC UA</span>
+                                <span class="tech-tag">PROFINET</span>
+                                <span class="tech-tag">EtherCAT</span>
+                                <span class="tech-tag">REST APIs</span>
+                                <span class="tech-tag">InfluxDB</span>
+                                <span class="tech-tag">Grafana</span>
+                                <span class="tech-tag">AWS / Azure IoT</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Experience (Timeline) -->
+        <section id="experience" class="py-20 reveal section-spy">
+            <div class="flex items-center mb-16">
+                <h2 class="text-2xl font-bold font-mono"><span class="accent-festo">02.</span> Operational Log (Experience)</h2>
+                <div class="h-px bg-[#1e2d4a] flex-grow ml-6"></div>
+            </div>
+
+            <div class="relative max-w-4xl mx-auto pl-4 md:pl-0">
+                <div class="timeline-line"></div>
+
+                <!-- Festo -->
+                <div class="relative pl-10 md:pl-12 mb-16 group">
+                    <!-- Solid Active Dot -->
+                    <div class="timeline-dot bg-[#0091dc] shadow-[0_0_10px_rgba(0,145,220,0.6)]"></div>
+                    <div class="flex flex-col md:flex-row gap-6">
+                        <div class="md:w-1/3">
+                            <p class="font-mono text-sm accent-text mb-1">05/2025 - 01/2026</p>
+                            <h3 class="text-xl font-bold text-white leading-tight mb-1">Master's Thesis</h3>
+                            <p class="text-[#0091dc] font-medium">Festo SE & Co. KG</p>
+                            <p class="text-gray-500 text-sm font-mono mt-1">Esslingen, DE</p>
+                        </div>
+                        <div class="md:w-2/3">
+                            <div class="hmi-card p-5">
+                                <div class="flex justify-between items-start mb-3">
+                                    <p class="font-medium text-white">Model Predictive Control for Nonlinear Industrial Systems</p>
+                                    <span class="bg-[#64ffda]/10 text-[#64ffda] border border-[#64ffda]/30 font-mono text-[10px] px-2 py-1 rounded uppercase tracking-wider whitespace-nowrap ml-4">Grade: 1.3</span>
+                                </div>
+                                <ul class="list-none text-sm text-gray-400 space-y-2">
+                                    <li><span class="text-[#0091dc] mr-2">▹</span>Implemented an Adaptive LTV-MPC for a complex MIMO plant via real-time successive linearization.</li>
+                                    <li><span class="text-[#0091dc] mr-2">▹</span>Developed an Augmented EKF (AEKF) to estimate unmeasured internal states and adapt to time-varying parameters.</li>
+                                    <li><span class="text-[#0091dc] mr-2">▹</span>Enforced hard actuator constraints in the QP solver, verifying real-time feasibility for PLC execution.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Asahi -->
+                <div class="relative pl-10 md:pl-12 mb-16 group">
+                    <div class="timeline-dot group-hover:bg-[#0091dc] transition-colors"></div>
+                    <div class="flex flex-col md:flex-row gap-6">
+                        <div class="md:w-1/3">
+                            <p class="font-mono text-sm accent-text mb-1">10/2020 - 05/2022</p>
+                            <h3 class="text-xl font-bold text-white leading-tight mb-1">Process & Systems Engineer</h3>
+                            <p class="text-[#0091dc] font-medium">Asahi India Glass</p>
+                            <p class="text-gray-500 text-sm font-mono mt-1">Gujarat, IN</p>
+                        </div>
+                        <div class="md:w-2/3">
+                            <div class="hmi-card p-5">
+                                <p class="font-medium text-white mb-3">Process Optimization & Quality</p>
+                                <ul class="list-none text-sm text-gray-400 space-y-2">
+                                    <li><span class="text-[#0091dc] mr-2">▹</span>Conducted Root Cause Analysis (RCA) for automated production processes (VW, Suzuki).</li>
+                                    <li><span class="text-[#0091dc] mr-2">▹</span>Organized technical spec, procurement, and validation of automated lab equipment.</li>
+                                    <li><span class="text-[#0091dc] mr-2">▹</span>Designed workflows achieving global NABL / ISO-17025 compliance.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 
-                <h1 class="text-5xl md:text-7xl font-black text-white leading-tight">
-                    Sahil Jasani
-                </h1>
-                <p class="text-xl md:text-2xl font-medium mt-4" style="color: var(--accent-color);">
-                    Advanced Control & AI Engineer
-                </p>
-                <p class="max-w-2xl mx-auto text-lg text-gray-400 mt-6">
-                    Bridging the gap between Advanced Control Theory and Industrial AI to build intelligent, autonomous systems for the real world.
-                </p>
             </div>
         </section>
 
-        <!-- Section 2: Summary -->
-        <section id="summary" class="section-min-height relative flex items-center justify-center p-8">
-            <div class="max-w-4xl mx-auto reveal z-10">
-                <h2 class="text-4xl font-bold text-center text-white mb-12 section-heading">About Me</h2>
-                <div class="glass-effect rounded-2xl p-8 md:p-12 space-y-6 text-lg text-gray-300 leading-relaxed">
-                    <p>
-                        I am an <strong>Advanced Control & AI Engineer</strong> specializing in the intersection of Control Theory, Machine Learning, and Industrial Automation. I have a proven track record in architecting Digital Twins, Adaptive MPC, and State & Parameter Estimation frameworks for complex nonlinear systems.
-                    </p>
-                    <p>
-                        My expertise lies in deploying <strong>hybrid control architectures</strong> that integrate <strong>Deep Learning</strong> models with real-time PLC environments using Docker and Industrial IoT protocols. I am passionate about bridging the gap between advanced mathematical modeling and scalable software deployment to drive process efficiency and autonomy. Additionally, I am fluent in English and actively improving my German (B1).
-                    </p>
+        <!-- Section 4: Education (Academic Registry) -->
+        <section id="education" class="py-20 reveal section-spy">
+            <div class="flex items-center mb-16">
+                <h2 class="text-2xl font-bold font-mono"><span class="accent-festo">03.</span> Academic Registry (Education)</h2>
+                <div class="h-px bg-[#1e2d4a] flex-grow ml-6"></div>
+            </div>
+
+            <div class="relative max-w-4xl mx-auto pl-4 md:pl-0">
+                <div class="timeline-line"></div>
+
+                <div class="relative pl-10 md:pl-14 mb-12 group">
+                    <!-- Solid Active Dot -->
+                    <div class="timeline-dot bg-[#0091dc] shadow-[0_0_10px_rgba(0,145,220,0.5)]"></div>
+                    <div class="flex flex-col md:flex-row gap-6">
+                        <div class="md:w-1/3 pt-1">
+                            <p class="font-mono text-sm accent-text mb-1">2022 - 2026</p>
+                            <h3 class="text-xl font-bold text-white leading-tight">M.Sc. Mechatronics</h3>
+                            <p class="text-[#0091dc] font-medium mt-1">Universität Siegen</p>
+                            <p class="text-gray-500 text-sm font-mono mt-1">Siegen, DE</p>
+                        </div>
+                        <div class="md:w-2/3">
+                            <div class="hmi-card p-5">
+                                <div class="flex justify-between items-start mb-3">
+                                    <p class="font-medium text-white">Academic Performance</p>
+                                    <span class="bg-[#64ffda]/10 text-[#64ffda] border border-[#64ffda]/30 font-mono text-[10px] px-2 py-1 rounded uppercase tracking-wider whitespace-nowrap ml-4">Grade: 2.1</span>
+                                </div>
+                                <p class="text-sm text-gray-400 leading-relaxed">Focus on Advanced Control Theory, Robotics, and Machine Learning. Master's thesis conducted at Festo SE & Co. KG focusing on Adaptive LTV-MPC and State Estimation.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
+                <div class="relative pl-10 md:pl-14 mb-8 group">
+                    <div class="timeline-dot group-hover:bg-[#0091dc] transition-colors"></div>
+                    <div class="flex flex-col md:flex-row gap-6">
+                        <div class="md:w-1/3 pt-1">
+                            <p class="font-mono text-sm accent-text mb-1">2017 - 2020</p>
+                            <h3 class="text-xl font-bold text-white leading-tight">B.Eng. Mechanical Engineering</h3>
+                            <p class="text-[#0091dc] font-medium mt-1">Gujarat University</p>
+                            <p class="text-gray-500 text-sm font-mono mt-1">India</p>
+                        </div>
+                        <div class="md:w-2/3">
+                            <div class="hmi-card p-5">
+                                <div class="flex justify-between items-start mb-3">
+                                    <p class="font-medium text-white">Academic Performance</p>
+                                    <span class="bg-[#64ffda]/10 text-[#64ffda] border border-[#64ffda]/30 font-mono text-[10px] px-2 py-1 rounded uppercase tracking-wider whitespace-nowrap ml-4">Grade: 1.4 (Eq.)</span>
+                                </div>
+                                <p class="text-sm text-gray-400 leading-relaxed">Foundational studies in mechanics, thermodynamics, and manufacturing processes, establishing a strong physical understanding for later control systems work.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </section>
 
-        <!-- Section 3: Experience -->
-        <section id="experience" class="section-min-height relative flex items-center justify-center p-8">
-            <div class="max-w-4xl mx-auto reveal w-full z-10">
-                <h2 class="text-4xl font-bold text-center text-white mb-16 section-heading">Work Experience</h2>
-                <div class="md:flex gap-8">
-                    <!-- Left: Tabs -->
-                    <div id="exp-tabs" class="md:w-1/3 flex md:flex-col gap-2 mb-8 md:mb-0">
-                        <div class="exp-tab active" onclick="switchExpTab(this, 'exp-festo')">
-                            <h3 class="font-bold">Festo SE & Co. KG</h3>
-                            <p class="text-sm text-gray-400">Thesis Student</p>
-                        </div>
-                         <div class="exp-tab" onclick="switchExpTab(this, 'exp-asahi')">
-                            <h3 class="font-bold">Asahi India Glass</h3>
-                            <p class="text-sm text-gray-400">Process & Systems Engineer</p>
-                        </div>
-                    </div>
-                    <!-- Right: Content -->
-                    <div class="md:w-2/3">
-                        <div id="exp-festo" class="exp-content active glass-effect animated-grid-bg rounded-xl p-8">
-                           <div class="relative z-10">
-                                <p class="font-semibold text-sm mb-1" style="color: var(--accent-color);">05/2025 - Present</p>
-                                <h3 class="text-2xl font-bold text-white mb-2">Model Predictive Control for Industrial Systems</h3>
-                                <p class="font-semibold text-gray-300 mb-4">Esslingen, Germany (HQ)</p>
-                                <ul class="list-disc list-inside text-gray-300 space-y-3">
-                                    <li><strong>Multivariable Control:</strong> Architected an Adaptive LTV-MPC for a complex MIMO plant to manage nonlinear dynamics via real-time successive linearization.</li>
-                                    <li><strong>State Estimation:</strong> Developed an Augmented EKF (AEKF) to estimate unmeasured internal states and adapt to time-varying physical parameters in real-time.</li>
-                                    <li><strong>Safety Critical Control:</strong> Enforced hard actuator constraints within the QP solver to prevent failure modes, verifying real-time feasibility for Industrial PLC execution.</li>
-                                </ul>
-                           </div>
-                        </div>
-                        <div id="exp-asahi" class="exp-content glass-effect animated-grid-bg rounded-xl p-8">
-                           <div class="relative z-10">
-                                <p class="font-semibold text-sm mb-1" style="color: var(--accent-color);">10/2020 - 05/2022</p>
-                                <h3 class="text-2xl font-bold text-white mb-2">Process & Systems Engineer</h3>
-                                 <p class="font-semibold text-gray-300 mb-4">Gujarat, India</p>
-                                <ul class="list-disc list-inside text-gray-300 space-y-3">
-                                    <li><strong>Process Optimization:</strong> Conducted Root Cause Analysis (RCA) for automated production processes and delivered data-driven solutions to major automotive clients.</li>
-                                    <li><strong>Project Management:</strong> Organized technical specification, procurement, and validation of new automated laboratory equipment, managing project from conception to handover.</li>
-                                    <li><strong>Quality & Compliance:</strong> Designed operational workflows for a new calibration lab, achieving global NABL/ISO-17025 compliance.</li>
-                                </ul>
-                           </div>
-                        </div>
-                    </div>
-                </div>
+        <!-- Section 5: Projects (Deployment Modules) -->
+        <section id="projects" class="py-20 reveal section-spy">
+            <div class="flex items-center mb-10">
+                <h2 class="text-2xl font-bold font-mono"><span class="accent-festo">04.</span> Deployment Modules (Projects)</h2>
+                <div class="h-px bg-[#1e2d4a] flex-grow ml-6"></div>
             </div>
-        </section>
-        
-        <!-- Section 4: Projects -->
-        <section id="projects" class="py-24 p-8 relative">
-            <div class="max-w-6xl mx-auto reveal z-10">
-                <h2 class="text-4xl font-bold text-center text-white mb-16 section-heading">Projects</h2>
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div class="glass-effect rounded-xl p-6 project-card">
-                        <h3 class="text-xl font-bold text-white">Hybrid AI-PID Control Loop</h3>
-                        <p class="text-gray-400 mt-2 text-sm">Designed a hybrid control architecture integrating a classic PID controller with a PyTorch Autoencoder supervisor for autonomous fault recovery in IIoT systems.</p>
-                    </div>
-                    <div class="glass-effect rounded-xl p-6 project-card">
-                        <h3 class="text-xl font-bold text-white">Physics-Based LiDAR Simulation</h3>
-                        <p class="text-gray-400 mt-2 text-sm">Engineered an Object-Oriented Monte Carlo transport engine in Python to simulate signal distortion from Fresnel reflection and stochastic surface roughness.</p>
-                    </div>
-                    <div class="glass-effect rounded-xl p-6 project-card">
-                        <h3 class="text-xl font-bold text-white">3-DOF Manipulator Control</h3>
-                        <p class="text-gray-400 mt-2 text-sm">Implemented inverse kinematics and PID trajectory tracking for a 3-DOF robotic arm using MATLAB & Simulink, validating joint-space control logic.</p>
-                    </div>
-                    <div class="glass-effect rounded-xl p-6 project-card">
-                        <h3 class="text-xl font-bold text-white">Autonomous Warehouse Robot</h3>
-                        <p class="text-gray-400 mt-2 text-sm">Developed a ROS 2 Navigation stack simulation in Gazebo, implementing SLAM (AMCL) and A* path planning for dynamic obstacle avoidance.</p>
-                    </div>
-                    <div class="glass-effect rounded-xl p-6 project-card">
-                        <h3 class="text-xl font-bold text-white">Edge AI Disease Detection</h3>
-                        <p class="text-gray-400 mt-2 text-sm">Deployed a quantized CNN model on mobile edge devices using TensorFlow Lite, achieving high-accuracy real-time plant disease classification.</p>
-                    </div>
-                    <div class="glass-effect rounded-xl p-6 project-card">
-                        <h3 class="text-xl font-bold text-white">RAG-Based Study Assistant</h3>
-                        <p class="text-gray-400 mt-2 text-sm">Built a Retrieval-Augmented Generation (RAG) system using FAISS for semantic search and BART for text simplification to navigate complex PDF technical docs.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
 
-        <!-- Section 5: Skills -->
-        <section id="skills" class="section-min-height relative flex items-center justify-center p-8 overflow-hidden">
-            <div id="skills-canvas-container"></div>
-            <div class="max-w-4xl mx-auto reveal w-full z-10">
-                <h2 class="text-4xl font-bold text-center text-white mb-16 section-heading">Skills</h2>
-                <div class="space-y-10">
-                    <div>
-                        <h3 class="text-xl font-semibold text-cyan-300 mb-4">Advanced Control & Automation</h3>
-                        <div class="flex flex-wrap gap-3">
-                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">Model Predictive Control (MPC)</span>
-                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">Active Constraint Handling</span>
-                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">State Estimation (EKF/AEKF)</span>
-                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">Sensor Fusion</span>
-                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">Parameter Identification</span>
-                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">HiL</span>
-                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">Real-Time Systems</span>
-                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">Digital Twins</span>
-                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">PLC (ST/OOP/IEC 61131-3)</span>
-                        </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <!-- Project 1 -->
+                <div class="hmi-card p-6 flex flex-col h-full group">
+                    <div class="flex justify-between items-center mb-4">
+                        <svg class="w-8 h-8 text-[#0091dc]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                        <span class="font-mono text-xs text-gray-500">01/2026</span>
                     </div>
-                    <div>
-                        <h3 class="text-xl font-semibold text-cyan-300 mb-4">Artificial Intelligence</h3>
-                        <div class="flex flex-wrap gap-3">
-                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">PINNs</span>
-                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">Neural ODEs</span>
-                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">Hybrid Modeling</span>
-                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">Generative AI</span>
-                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">LLMs</span>
-                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">Deep RL</span>
-                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">Safe RL</span>
-                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">Autoencoders</span>
-                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">SINDy</span>
-                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">Virtual Sensing</span>
-                        </div>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-semibold text-cyan-300 mb-4">Software & Embedded Development</h3>
-                        <div class="flex flex-wrap gap-3">
-                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">Python (PyTorch, CasADi, Streamlit)</span>
-                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">C++ (Embedded)</span>
-                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">MATLAB/Simulink</span>
-                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">RTOS (FreeRTOS)</span>
-                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">ARM Cortex-M</span>
-                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">Docker</span>
-                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">CI/CD</span>
-                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">TDD</span>
-                        </div>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-semibold text-cyan-300 mb-4">Industrial Connectivity & Cloud</h3>
-                        <div class="flex flex-wrap gap-3">
-                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">MQTT</span>
-                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">OPC UA</span>
-                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">InfluxDB</span>
-                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">Grafana</span>
-                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">AWS IoT</span>
-                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">Azure IoT</span>
-                        </div>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-semibold text-cyan-300 mb-4">Standards & Methodologies</h3>
-                        <div class="flex flex-wrap gap-3">
-                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">VDI 2206</span>
-                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">ISO 13849</span>
-                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">Agile</span>
-                            <span class="glass-effect text-sm px-4 py-2 rounded-lg">Lean Six Sigma</span>
-                        </div>
+                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-[#64ffda] transition">Hybrid HiL Thermal Control</h3>
+                    <p class="text-gray-400 text-sm mb-6 flex-grow">Connected a Python FOPDT thermodynamics model to a CODESYS PLC via Modbus TCP. Implemented an FSM in ST and a PID loop maintaining stability within ±0.5°C.</p>
+                    <div class="flex flex-wrap gap-2 mt-auto">
+                        <span class="font-mono text-xs text-gray-500">CODESYS (ST)</span>
+                        <span class="font-mono text-xs text-gray-500">Modbus TCP</span>
+                        <span class="font-mono text-xs text-gray-500">HiL</span>
                     </div>
                 </div>
+
+                <!-- Project 2 -->
+                <div class="hmi-card p-6 flex flex-col h-full group">
+                    <div class="flex justify-between items-center mb-4">
+                        <svg class="w-8 h-8 text-[#0091dc]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path></svg>
+                        <span class="font-mono text-xs text-gray-500">2025</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-[#64ffda] transition">AI-Supervised IIoT Control</h3>
+                    <p class="text-gray-400 text-sm mb-6 flex-grow">Integrated a field-level PID controller with a PyTorch Autoencoder supervisor. Fused vibration/thermal data via an EKF and built an AsyncIO telemetry pipeline.</p>
+                    <div class="flex flex-wrap gap-2 mt-auto">
+                        <span class="font-mono text-xs text-gray-500">PyTorch</span>
+                        <span class="font-mono text-xs text-gray-500">OPC UA / MQTT</span>
+                        <span class="font-mono text-xs text-gray-500">Docker</span>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="hmi-card p-6 flex flex-col h-full group">
+                    <div class="flex justify-between items-start mb-4">
+                        <svg class="w-8 h-8 text-[#0091dc]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5"></path></svg>
+                        <span class="bg-[#64ffda]/10 text-[#64ffda] border border-[#64ffda]/30 font-mono text-[10px] px-2 py-1 rounded uppercase tracking-wider">Grade: 1.0</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-1 group-hover:text-[#64ffda] transition">Advanced LiDAR Simulation</h3>
+                    <p class="text-xs text-[#0091dc] font-mono mb-3">Supervised by Prof. Dr. Ivo Ihrke</p>
+                    <p class="text-gray-400 text-sm mb-6 flex-grow">Engineered an Object-Oriented Monte Carlo transport engine in Python modeling Henyey-Greenstein scattering, Fresnel reflection, and stochastic surface roughness.</p>
+                    <div class="flex flex-wrap gap-2 mt-auto">
+                        <span class="font-mono text-xs text-gray-500">Python (NumPy)</span>
+                        <span class="font-mono text-xs text-gray-500">Monte Carlo</span>
+                        <span class="font-mono text-xs text-gray-500">Physics Modeling</span>
+                    </div>
+                </div>
+
+                <!-- Project 4 -->
+                <div class="hmi-card p-6 flex flex-col h-full group">
+                    <div class="flex justify-between items-center mb-4">
+                        <svg class="w-8 h-8 text-[#0091dc]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-[#64ffda] transition">Autonomous Warehouse Robot</h3>
+                    <p class="text-gray-400 text-sm mb-6 flex-grow">Developed a ROS 2 Navigation stack simulation in Gazebo, implementing SLAM (AMCL) and A* path planning for dynamic obstacle avoidance.</p>
+                    <div class="flex flex-wrap gap-2 mt-auto">
+                        <span class="font-mono text-xs text-gray-500">ROS 2</span>
+                        <span class="font-mono text-xs text-gray-500">Gazebo</span>
+                        <span class="font-mono text-xs text-gray-500">SLAM</span>
+                    </div>
+                </div>
+                
+                 <!-- Project 5 -->
+                <div class="hmi-card p-6 flex flex-col h-full group">
+                    <div class="flex justify-between items-center mb-4">
+                        <svg class="w-8 h-8 text-[#0091dc]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-[#64ffda] transition">Edge AI Disease Detection</h3>
+                    <p class="text-gray-400 text-sm mb-6 flex-grow">Deployed a quantized CNN model on mobile edge devices using TensorFlow Lite, achieving high-accuracy real-time plant disease classification.</p>
+                    <div class="flex flex-wrap gap-2 mt-auto">
+                        <span class="font-mono text-xs text-gray-500">TensorFlow Lite</span>
+                        <span class="font-mono text-xs text-gray-500">Edge AI</span>
+                        <span class="font-mono text-xs text-gray-500">Quantization</span>
+                    </div>
+                </div>
+
+                 <!-- Project 6 -->
+                <div class="hmi-card p-6 flex flex-col h-full group">
+                    <div class="flex justify-between items-center mb-4">
+                        <svg class="w-8 h-8 text-[#0091dc]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-[#64ffda] transition">RAG-Based Study Assistant</h3>
+                    <p class="text-gray-400 text-sm mb-6 flex-grow">Built a Retrieval-Augmented Generation (RAG) system using FAISS for semantic search and BART for text simplification to navigate complex PDF technical docs.</p>
+                    <div class="flex flex-wrap gap-2 mt-auto">
+                        <span class="font-mono text-xs text-gray-500">LLMs / RAG</span>
+                        <span class="font-mono text-xs text-gray-500">FAISS</span>
+                        <span class="font-mono text-xs text-gray-500">BART</span>
+                    </div>
+                </div>
+
             </div>
         </section>
 
         <!-- Section 6: Contact -->
-        <section id="contact" class="section-min-height relative flex flex-col items-center justify-center p-8 text-center">
-            <div class="max-w-2xl mx-auto reveal z-10">
-                <h2 class="text-4xl font-bold text-center text-white mb-4 section-heading">Get In Touch</h2>
-                <p class="text-lg text-gray-400 mb-8">
-                    I am currently open to new opportunities in Advanced Control and Industrial AI. Whether you have a challenging project in mind or just want to connect, feel free to reach out.
-                </p>
-                <a href="mailto:sahil.jasani@student.uni-siegen.de" class="inline-block bg-cyan-600 hover:bg-cyan-500 text-white font-semibold text-lg px-8 py-4 rounded-lg transition duration-300 transform hover:scale-105 shadow-lg shadow-cyan-600/20">
-                    Say Hello
+        <section id="contact" class="py-32 reveal flex flex-col items-center text-center max-w-4xl mx-auto section-spy">
+            <h2 class="font-mono text-[#64ffda] mb-4">05. What's Next?</h2>
+            <h3 class="text-4xl md:text-5xl font-bold text-white mb-6">Get In Touch</h3>
+            <p class="text-gray-400 mb-10 max-w-2xl">
+                I am currently open to new opportunities in Automation and Industrial AI across Germany and beyond. Whether you have a challenging control problem or just want to connect, my inbox is open.
+            </p>
+            <a href="mailto:jasanisahil11@gmail.com" class="bg-transparent border border-[#64ffda] text-[#64ffda] font-mono px-8 py-4 rounded hover:bg-[#64ffda]/10 transition duration-300 mb-16">
+                Initiate Handshake
+            </a>
+
+            <!-- Contact Details Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full text-left">
+                <!-- Email -->
+                <a href="mailto:jasanisahil11@gmail.com" class="hmi-card p-4 flex items-center space-x-4 group hover:bg-[#112240]">
+                    <div class="p-3 bg-[#0a192f] rounded border border-[#1e2d4a] group-hover:border-[#0091dc] transition">
+                        <svg class="w-6 h-6 text-[#0091dc]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                    </div>
+                    <div>
+                        <p class="text-xs text-gray-500 font-mono mb-1">Email</p>
+                        <p class="text-gray-300 text-sm font-medium">jasanisahil11@gmail.com</p>
+                    </div>
+                </a>
+
+                <!-- Phone -->
+                <a href="tel:+491756458087" class="hmi-card p-4 flex items-center space-x-4 group hover:bg-[#112240]">
+                    <div class="p-3 bg-[#0a192f] rounded border border-[#1e2d4a] group-hover:border-[#0091dc] transition">
+                        <svg class="w-6 h-6 text-[#0091dc]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                    </div>
+                    <div>
+                        <p class="text-xs text-gray-500 font-mono mb-1">Phone</p>
+                        <p class="text-gray-300 text-sm font-medium">+49 175 645 8087</p>
+                    </div>
+                </a>
+
+                <!-- Location -->
+                <div class="hmi-card p-4 flex items-center space-x-4">
+                    <div class="p-3 bg-[#0a192f] rounded border border-[#1e2d4a]">
+                        <svg class="w-6 h-6 text-[#0091dc]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                    </div>
+                    <div>
+                        <p class="text-xs text-gray-500 font-mono mb-1">Location</p>
+                        <p class="text-gray-300 text-sm font-medium">Stuttgart, Baden-Württemberg, DE</p>
+                    </div>
+                </div>
+
+                <!-- LinkedIn -->
+                <a href="https://linkedin.com/in/sahiljasani" target="_blank" class="hmi-card p-4 flex items-center space-x-4 group hover:bg-[#112240]">
+                    <div class="p-3 bg-[#0a192f] rounded border border-[#1e2d4a] group-hover:border-[#0091dc] transition">
+                        <svg class="w-6 h-6 text-[#0091dc]" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path></svg>
+                    </div>
+                    <div>
+                        <p class="text-xs text-gray-500 font-mono mb-1">LinkedIn</p>
+                        <p class="text-gray-300 text-sm font-medium">linkedin.com/in/sahiljasani</p>
+                    </div>
                 </a>
             </div>
-            
-            <footer class="mt-24 text-center text-gray-500 relative z-10">
-                <div class="flex justify-center space-x-6 mb-4">
-                    <a href="https://github.com/SahilJasani2" target="_blank" class="hover:text-cyan-400 transition"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.108-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.91 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path></svg></a>
-                    <a href="https://linkedin.com/in/sahiljasani/" target="_blank" class="hover:text-cyan-400 transition"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path></svg></a>
-                </div>
-                <p>Designed & Built by Sahil Jasani</p>
-            </footer>
         </section>
+
+        <!-- Footer -->
+        <footer class="py-8 text-center text-sm font-mono text-gray-500">
+            <div class="flex justify-center space-x-6 mb-4">
+                <a href="https://github.com/SahilJasani2" target="_blank" class="hover:text-[#64ffda] transition">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.108-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.91 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path></svg>
+                </a>
+                <a href="https://linkedin.com/in/sahiljasani/" target="_blank" class="hover:text-[#64ffda] transition">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path></svg>
+                </a>
+            </div>
+            <p>Designed & Built by Sahil Jasani</p>
+        </footer>
     </main>
-    
+
     <script>
-        // --- Scroll Animations ---
+        // --- Scroll Animations for Reveal ---
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('visible');
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
             });
-        }, { threshold: 0.1 });
+        }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+        
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-        // --- Active Nav Link on Scroll ---
-        const sections = document.querySelectorAll('section');
+        // --- Active Nav Link Spying ---
+        const sections = document.querySelectorAll('.section-spy');
         const navLinks = document.querySelectorAll('.nav-link');
+        
         const navObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     navLinks.forEach(link => {
-                        link.classList.toggle('active', link.getAttribute('href').substring(1) === entry.target.id);
+                        // Check if the href matches the section ID
+                        if (link.getAttribute('href') === `#${entry.target.id}`) {
+                            link.classList.add('active');
+                        } else {
+                            link.classList.remove('active');
+                        }
                     });
                 }
             });
-        }, { rootMargin: "-50% 0px -50% 0px" });
-        sections.forEach(section => navObserver.observe(section));
+        }, { rootMargin: "-30% 0px -60% 0px" }); // Triggers when section hits the middle of screen
         
-        // --- Experience Tab Switching ---
-        function switchExpTab(tabElement, contentId) {
-            document.querySelectorAll('.exp-tab').forEach(tab => tab.classList.remove('active'));
-            document.querySelectorAll('.exp-content').forEach(content => content.classList.remove('active'));
-            tabElement.classList.add('active');
-            document.getElementById(contentId).classList.add('active');
-        }
+        sections.forEach(section => navObserver.observe(section));
 
         // --- Three.js Lorenz Attractor Animation ---
         let scene, camera, renderer;
-        let points, lines = [];
+        let lines = [];
         
         // Lorenz System Parameters
         const SIGMA = 10;
@@ -421,22 +656,20 @@
         const BETA = 8/3;
         const DT = 0.008;
         const TRAIL_LENGTH = 1500;
-        // Reduced form 50 to 30 for cleaner visualization
         const NUM_TRAJECTORIES = 30;
-        // State Array for multiple trajectories
-        // Each element: { x, y, z, line, positions (Float32Array) }
+        
         let lorenzSystem = [];
-
-        // Removed Mouse state variables and event listeners for steady animation
 
         function init3D() {
             const container = document.getElementById('hero-canvas');
             if (!container) return;
+            
             scene = new THREE.Scene();
+            // Optional: Fog for depth fading
+            scene.fog = new THREE.FogExp2('#060913', 0.015);
+
             camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
             
-            // Adjusted Camera for Upright View
-            // The attractor is centered around Z=25 (which we map to Y=25)
             camera.position.z = 80; 
             camera.position.y = 25; 
             camera.lookAt(0, 25, 0);
@@ -455,17 +688,19 @@
                 const positions = new Float32Array(TRAIL_LENGTH * 3);
                 for (let j = 0; j < TRAIL_LENGTH * 3; j+=3) {
                     positions[j] = startX;
-                    positions[j+1] = startZ; // Map Lorenz Z -> World Y (Up)
-                    positions[j+2] = startY; // Map Lorenz Y -> World Z (Depth)
+                    positions[j+1] = startZ; 
+                    positions[j+2] = startY; 
                 }
 
                 const geometry = new THREE.BufferGeometry();
                 geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
 
+                // Tweaked colors to match the Simens #0091dc and #64ffda theme
+                const isAccent = Math.random() > 0.8;
                 const material = new THREE.LineBasicMaterial({ 
-                    color: '#0891b2',
+                    color: isAccent ? '#64ffda' : '#0091dc',
                     linewidth: 1, 
-                    opacity: 0.3 + Math.random() * 0.4, 
+                    opacity: 0.2 + Math.random() * 0.3, 
                     transparent: true
                 });
 
@@ -504,21 +739,20 @@
                 p.positions.copyWithin(0, 3);
                 
                 const lastIdx = p.positions.length - 3;
-                // FIX: Consistent Axis Mapping (Z is Up)
                 p.positions[lastIdx] = p.x;
-                p.positions[lastIdx+1] = p.z; // Map Lorenz Z -> World Y
-                p.positions[lastIdx+2] = p.y; // Map Lorenz Y -> World Z
+                p.positions[lastIdx+1] = p.z; 
+                p.positions[lastIdx+2] = p.y; 
                 
                 p.line.geometry.attributes.position.needsUpdate = true;
             });
 
-            // Steady Camera Rotation (Non-interactive)
+            // Steady Camera Rotation
             angle += 0.001; 
             const radius = 80; 
             
             camera.position.x = radius * Math.sin(angle);
             camera.position.z = radius * Math.cos(angle);
-            camera.position.y = 25; // Keep steady height looking at center
+            camera.position.y = 25; 
 
             camera.lookAt(0, 25, 0); 
 
@@ -531,131 +765,9 @@
             camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth, window.innerHeight);
         }
-        
-        // --- Skills Animation (Neural Network) ---
-        let skillsScene, skillsCamera, skillsRenderer, skillsPoints, skillsLines;
-        const skillsMouse = new THREE.Vector2();
 
-        function initSkillsAnimation() {
-            const container = document.getElementById('skills-canvas-container');
-            if (!container) return;
-
-            skillsScene = new THREE.Scene();
-            skillsCamera = new THREE.PerspectiveCamera(75, container.offsetWidth / container.offsetHeight, 1, 1000);
-            skillsCamera.position.z = 50;
-
-            skillsRenderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-            skillsRenderer.setSize(container.offsetWidth, container.offsetHeight);
-            skillsRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-            container.appendChild(skillsRenderer.domElement);
-            
-            const NUM_POINTS = 100;
-            const positions = [];
-            const particlesData = [];
-
-            for (let i = 0; i < NUM_POINTS; i++) {
-                const x = Math.random() * 200 - 100;
-                const y = Math.random() * 200 - 100;
-                const z = Math.random() * 200 - 100;
-                positions.push(x, y, z);
-                particlesData.push({
-                    velocity: new THREE.Vector3(-1 + Math.random() * 2, -1 + Math.random() * 2, -1 + Math.random() * 2).multiplyScalar(0.1),
-                    numConnections: 0
-                });
-            }
-            
-            const pGeom = new THREE.BufferGeometry();
-            pGeom.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3).setUsage(THREE.DynamicDrawUsage));
-            pGeom.userData.particlesData = particlesData; 
-
-            const pMat = new THREE.PointsMaterial({ color: '#22d3ee', size: 1.5, blending: THREE.AdditiveBlending, transparent: true });
-            skillsPoints = new THREE.Points(pGeom, pMat);
-            skillsScene.add(skillsPoints);
-
-            const lineGeom = new THREE.BufferGeometry();
-            const linePos = new Float32Array(NUM_POINTS * NUM_POINTS * 3);
-            lineGeom.setAttribute('position', new THREE.BufferAttribute(linePos, 3).setUsage(THREE.DynamicDrawUsage));
-            const lineMat = new THREE.LineBasicMaterial({ color: '#0e7490', transparent: true, opacity: 0.3, blending: THREE.AdditiveBlending });
-            skillsLines = new THREE.LineSegments(lineGeom, lineMat);
-            skillsScene.add(skillsLines);
-
-            container.addEventListener('mousemove', onSkillsMouseMove, false);
-            window.addEventListener('resize', onSkillsWindowResize, false);
-            animateSkills();
-        }
-        
-        function onSkillsWindowResize() {
-            const container = document.getElementById('skills-canvas-container');
-            if (!container) return;
-            skillsCamera.aspect = container.offsetWidth / container.offsetHeight;
-            skillsCamera.updateProjectionMatrix();
-            skillsRenderer.setSize(container.offsetWidth, container.offsetHeight);
-        }
-
-        function onSkillsMouseMove(event) {
-            const container = document.getElementById('skills-canvas-container');
-            if (!container) return;
-            const rect = container.getBoundingClientRect();
-            skillsMouse.x = ((event.clientX - rect.left) / container.offsetWidth) * 2 - 1;
-            skillsMouse.y = -((event.clientY - rect.top) / container.offsetHeight) * 2 + 1;
-        }
-
-        function animateSkills() {
-            if (!skillsRenderer) return;
-
-            const pGeom = skillsPoints.geometry;
-            const positions = pGeom.attributes.position;
-            const particlesData = pGeom.userData.particlesData;
-            
-            const mouseVector = new THREE.Vector3(skillsMouse.x, skillsMouse.y, 0.5);
-            mouseVector.unproject(skillsCamera);
-            const dir = mouseVector.sub(skillsCamera.position).normalize();
-            const distance = -skillsCamera.position.z / dir.z;
-            const pos = skillsCamera.position.clone().add(dir.multiplyScalar(distance));
-
-            let vertexpos = 0;
-            let numConnected = 0;
-
-            for (let i = 0; i < particlesData.length; i++) {
-                particlesData[i].numConnections = 0;
-                const p = new THREE.Vector3(positions.getX(i), positions.getY(i), positions.getZ(i));
-                p.add(particlesData[i].velocity);
-                
-                const distToMouse = p.distanceTo(pos);
-                if (distToMouse < 20) {
-                    const repel = new THREE.Vector3().subVectors(p, pos).normalize();
-                    p.add(repel.multiplyScalar(0.5));
-                }
-
-                if (p.x < -100 || p.x > 100) particlesData[i].velocity.x *= -1;
-                if (p.y < -100 || p.y > 100) particlesData[i].velocity.y *= -1;
-                if (p.z < -100 || p.z > 100) particlesData[i].velocity.z *= -1;
-                positions.setXYZ(i, p.x, p.y, p.z);
-            }
-
-            const linePositions = skillsLines.geometry.attributes.position;
-            for (let i = 0; i < particlesData.length; i++) {
-                for (let j = i + 1; j < particlesData.length; j++) {
-                    const p1 = new THREE.Vector3(positions.getX(i), positions.getY(i), positions.getZ(i));
-                    const p2 = new THREE.Vector3(positions.getX(j), positions.getY(j), positions.getZ(j));
-                    if (p1.distanceTo(p2) < 25 && numConnected < particlesData.length * 2) {
-                        linePositions.setXYZ(vertexpos++, p1.x, p1.y, p1.z);
-                        linePositions.setXYZ(vertexpos++, p2.x, p2.y, p2.z);
-                        numConnected++;
-                    }
-                }
-            }
-
-            positions.needsUpdate = true;
-            linePositions.needsUpdate = true;
-            skillsLines.geometry.setDrawRange(0, numConnected * 2);
-
-            skillsRenderer.render(skillsScene, skillsCamera);
-            requestAnimationFrame(animateSkills);
-        }
-
+        // Initialize 3D Background
         init3D();
-        initSkillsAnimation();
     </script>
 </body>
 </html>
